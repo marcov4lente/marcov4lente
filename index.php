@@ -33,7 +33,7 @@
                     <img src="images/Marco-Valente-Avatar.jpg" alt=Marco V4lente Avatar">
                 </div>
                 <div class="col s12 m5 quote">
-                    Hi, I'm Marco! I'm a hard working and ambitious Web Application developer with keen adherence coding standards.
+                    Hi, I'm Marco! I'm a hard working and ambitious web application developer with a keen adherence coding standards.
                 </div>
                 <div class="col hide-on-small-and-down m2">
                     &nbsp;
