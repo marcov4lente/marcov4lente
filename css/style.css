@@ -1,0 +1,45 @@
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+.p, .copyright{
+    margin: 10px;
+}
+
+.logo {
+    margin-top:5px;
+    margin-left:20px;
+}
+
+.avatar {
+     margin-top:120px;
+     text-align:right;
+}
+
+.avatar img {
+    border-radius: 50%;
+    width:200px;
+    height:200px;
+}
+
+.quote {
+    margin-top:130px;
+    text-align:left;
+    font-size:2em;
+    font-weight:light;
+    color: #ffffff
+
+}
+
+.hero {
+/*    background-image: url('../images/lisboa-oriente-background.jpeg');
+    background-size: cover;
+    background-position: center 30%;*/
+    background-color: #263238;
+    height:450px;
+}
+
+.copyright {
+        text-align: center;
+}
