@@ -24,21 +24,17 @@
         </nav>
 
         <div class="row hero">
-
             <div class="container">
-                <div class="col hide-on-small-and-down m2">
-                    &nbsp;
-                </div>
                 <div class="col s12 m3 avatar">
-                    <img src="images/Marco-Valente-Avatar.jpg" alt=Marco V4lente Avatar">
+                    <p>
+                        <img src="images/Marco-Valente-Avatar.jpg" alt="Marco V4lente Avatar">
+                    </p>
                 </div>
-                <div class="col s12 m5 quote">
-                    Hi, I'm Marco! I'm a hard working and ambitious web application developer with a keen adherence coding standards.
+                <div class="col s12 m9 quote">
+                    <p>
+                        Hi, I'm Marco! I'm a hard working and ambitious web application developer with a keen adherence coding standards.
+                    <p>
                 </div>
-                <div class="col hide-on-small-and-down m2">
-                    &nbsp;
-                </div>
-
             </div>
         </div>
         <div class="row">
@@ -62,7 +58,7 @@
             </div>
         </div>
         <footer class="page-footer white">
-            <div class="copyright blue-grey-text text-darken-2">
+            <div class="copyright blue-grey-text text-darken-2 center-align">
                 <p>
                     © <?php print date('Y') ?> Copyright MarcoV4lente, property on Marco Valente, all rights reserved.
                 </p>
