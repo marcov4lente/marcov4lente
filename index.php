@@ -26,9 +26,7 @@
         <div class="row hero">
             <div class="container">
                 <div class="col s12 m3 avatar">
-                    <p>
-                        <img src="images/Marco-Valente-Avatar.jpg" alt="Marco V4lente Avatar">
-                    </p>
+                    <img src="images/Marco-Valente-Avatar.jpg" alt="Marco V4lente Avatar">
                 </div>
                 <div class="col s12 m9 quote">
                     <p>
