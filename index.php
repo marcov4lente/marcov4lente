@@ -61,8 +61,8 @@
             </div>
         </div>
         <footer class="page-footer white">
-            <div class="copyright blue-grey-text text-darken-2 center-align">
-                <p>
+            <div class="copyright blue-grey-text text-darken-2">
+                <p class="center-align">
                     © <?php print date('Y') ?> Copyright MarcoV4lente, property of Marco Valente, all rights reserved.
                 </p>
             </div>
