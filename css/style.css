@@ -4,12 +4,18 @@ html, body {
 }
 
 h1 {
-    font-size:2em;
-    margin:0;
-    padding:0 0 5px 0;
+    font-size: 2em;
+    margin: 0;
+    padding: 0 0 5px 0;
 }
 
-.p, .copyright{
+h2 {
+    font-size: 1.7em;
+    margin: 0;
+    padding: 0 0 5px 0;
+}
+
+.p {
     margin: 10px;
 }
 

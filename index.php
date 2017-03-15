@@ -40,11 +40,13 @@
         <div class="row">
             <div class="container">
                 <div class="col s12 m6">
+                    <h2 class="red-text text-darken-4"><i class="fa fa-globe" aria-hidden="true"></i></i> Global Experience</h2>
                     <p>
                         With eight years of practical commercial experience, I've had fantastic opportunities to work with companies and clients from across Europe and Africa. I have therefore had the great pleasure of developing web applications for a wide variety of purposes.
                     </p>
                 </div>
                 <div class="col s12 m6">
+                    <h2 class="red-text text-darken-4"><i class="fa fa-code" aria-hidden="true"></i> Best Practices</h2>
                     <p>
                         I strive to develop web solutions with a keen adherence to quality and standards. I am a firm believer of standards and best practices, which I feel is the cornerstone of a beautifully built application.
                     </p>
