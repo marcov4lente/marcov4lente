@@ -1,16 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>MarcoV4lente - Web Application Developer</title>
+
+        <meta name="description" content="Hi, I'm Marco! I'm a web application developer! Web technologies fascinate me, and I find pleasure in conceptualising and building functional web applications that serve purpose.">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="msapplication-tap-highlight" content="no">
+
+        <!--link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32"-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css"  media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
     </head>
 
     <body>
-
         <nav class="white blue-grey-text text-darken-2">
             <div class="container">
                 <div class="nav-wrapper">
