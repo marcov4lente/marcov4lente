@@ -15,7 +15,7 @@
             <div class="container">
                 <div class="nav-wrapper">
                 <a href="#" class="logo"><img src="images/marcov4lente-logo.png" alt="MarcoV4lente"></a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <ul id="nav-mobile" class="right hide-on-small-only">
                 <li><a href="https://www.linkedin.com/in/marcov4lente/" class="red-text text-darken-4"><i class="fa fa-linkedin-square" aria-hidden="true"></i> Linked In</a></li>
                 <li><a href="https://instagram.com/marcov4lente" class="red-text text-darken-4"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a></li>
                 </ul>
@@ -23,34 +23,30 @@
             </div>
         </nav>
 
+        <!--div class="row hero" style="background-image: url('images/header-<?php print rand(1,4) ?>.jpg');"-->
         <div class="row hero">
             <div class="container">
                 <div class="col s12 m3 avatar">
                     <img src="images/Marco-Valente-Avatar.jpg" alt="Marco V4lente Avatar">
                 </div>
                 <div class="col s12 m9 quote">
+                    <h1>Hi, I'm Marco! I'm a web application developer!</h1>
                     <p>
-                        Hi, I'm Marco! I'm a hard working and ambitious web application developer with a keen adherence coding standards.
+                       Web technologies fascinate me, and I find pleasure in conceptualising and building functional web applications that serve purpose.
                     <p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="container">
-
-                <div class="col s12 m4">
+                <div class="col s12 m6">
                     <p>
-                        With eight years of practical commercial experience, I am both adaptable and resourceful while maintaining an ordered, organised approach to my ongoing projects.
+                        With eight years of practical commercial experience, I've had fantastic opportunities to work with companies and clients from across Europe and Africa. I have therefore had the great pleasure of developing web applications for a wide variety of purposes.
                     </p>
                 </div>
-                <div class="col s12 m4">
+                <div class="col s12 m6">
                     <p>
-                        My self motivation and a fascination for web technologies consistently fuels my endeavours for continued professional growth and advancement. As a result I am always eager to expand, learn and adapt to new techniques in a continuously evolving field.
-                    </p>
-                </div>
-                <div class="col s12 m4">
-                    <p>
-                        I find pleasure in conceptualising and building functional PHP applications that serve purpose. I am a firm advocate for standards and best practices, which I believe are the cornerstones of beautifully constructed applications.
+                        I strive to develop web solutions with a keen adherence to quality and standards. I am a firm believer of standards and best practices, which I feel is the cornerstone of a beautifully built application.
                     </p>
                 </div>
             </div>
@@ -58,7 +54,7 @@
         <footer class="page-footer white">
             <div class="copyright blue-grey-text text-darken-2 center-align">
                 <p>
-                    © <?php print date('Y') ?> Copyright MarcoV4lente, property on Marco Valente, all rights reserved.
+                    © <?php print date('Y') ?> Copyright MarcoV4lente, property of Marco Valente, all rights reserved.
                 </p>
             </div>
         </footer>
