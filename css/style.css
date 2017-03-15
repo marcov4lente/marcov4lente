@@ -6,17 +6,18 @@ html, body {
 h1 {
     font-size: 2em;
     margin: 0;
-    padding: 0 0 5px 0;
+    padding: 5px 0 5px 0;
 }
 
 h2 {
     font-size: 1.7em;
     margin: 0;
-    padding: 0 0 5px 0;
+    padding: 5px 0 5px 0;
 }
 
 .p {
     margin: 10px;
+    text-align: justify;
 }
 
 .logo {
@@ -50,7 +51,7 @@ h2 {
 .quote {
     font-weight:light;
     font-size:1.2em;
-    color: #ffffff
+    color: #ffffff;
 }
 
 .copyright {
