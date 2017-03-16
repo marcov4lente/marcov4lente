@@ -41,9 +41,9 @@
                 <div class="col s12">
                     <div class="col-content white-text">
                         <img class="avatar" src="images/Marco-Valente-Avatar.jpg" alt="Marco V4lente Avatar">
-                        <h1>Hi, I'm Marco! I'm a web application developer!</h1>
+                        <h1>Hi! I'm Marco Valent and I'm a web application developer!</h1>
                         <p class="quote">
-                           Web technologies fascinate me! I find pleasure in conceptualising and building functional web applications that serve purpose.
+                           Web technology has always fascinated me! I find pleasure in conceptualising and building functional web applications that serve purpose.
                         <p>
                     </div>
                 </div>
@@ -84,7 +84,8 @@
         <footer class="page-footer white">
             <div class="col-content blue-grey-text text-darken-2">
                 <p class="center-align">
-                    © <?php print date('Y') ?> Copyright MarcoV4lente, property of Marco Valente, all rights reserved.
+                    © <?php print date('Y') ?> Copyright MarcoV4lente, property of Marco Valente<br>
+                    All rights reserved.
                 </p>
             </div>
         </footer>
