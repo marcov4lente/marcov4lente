@@ -67,7 +67,7 @@
                     <div class="col-content">
                         <h2 class="cyan-text text-darken-2"><i class="fa fa-globe" aria-hidden="true"></i></i> Global Experience</h2>
                         <p>
-                            With eight years of practical commercial experience, I've had fantastic opportunities to work with companies and clients from across Europe and Africa. I have therefore had the great pleasure of developing web applications for a wide variety of purposes.
+                            With eight years of practical commercial experience, I've had fantastic opportunities to work with companies and clients from across Europe and Africa. As a result I've had the great pleasure of developing web applications of many shapes and sizes.
                         </p>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                     <div class="col-content">
                         <h2 class="cyan-text text-darken-2"><i class="fa fa-code" aria-hidden="true"></i> Best Practices</h2>
                         <p>
-                            I strive to develop web solutions with a keen adherence to quality and standards. I am a firm believer of standards and best practices, which I feel is the cornerstone of a beautifully built application.
+                            I strive to develop web solutions with a keen adherence to quality and standards. I am a firm believer of standards and best practices, which I feel is the cornerstone of any beautifully built application.
                         </p>
                     </div>
                 </div>
