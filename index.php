@@ -26,63 +26,63 @@
                     </a>
                     <ul id="nav-mobile" class="right hide-on-small-only">
                         <li>
-                            <a href="https://www.linkedin.com/in/marcov4lente/" class="red-text text-darken-4"><i class="fa fa-linkedin-square" aria-hidden="true"></i> Linked In</a>
+                            <a href="https://www.linkedin.com/in/marcov4lente/" class="cyan-text text-darken-2"><i class="fa fa-linkedin-square" aria-hidden="true"></i> Linked In</a>
                         </li>
                         <li>
-                            <a href="https://instagram.com/marcov4lente" class="red-text text-darken-4"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a>
+                            <a href="https://instagram.com/marcov4lente" class="cyan-text text-darken-2"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-
         <!--div class="row hero" style="background-image: url('images/header-<?php print rand(1,4) ?>.jpg');"-->
         <div class="row hero">
             <div class="container">
-                <div class="col s12 m3 avatar valign-wrapper">
-                    <div class="valign">
-                        <img  src="images/Marco-Valente-Avatar.jpg" alt="Marco V4lente Avatar">
-                    </div>
-                </div>
-                <div class="col s12 m9 quote valign-wrapper">
-                    <div class="valign">
+                <div class="col s12">
+                    <div class="col-content white-text">
+                        <img class="avatar" src="images/Marco-Valente-Avatar.jpg" alt="Marco V4lente Avatar">
                         <h1>Hi, I'm Marco! I'm a web application developer!</h1>
-                        <p>
+                        <p class="quote">
                            Web technologies fascinate me! I find pleasure in conceptualising and building functional web applications that serve purpose.
                         <p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row hide-on-med-and-up">
+        <div class="row hide-on-med-and-up blue-grey lighten-5">
             <div class="col s6 center-align">
-                    <a href="https://www.linkedin.com/in/marcov4lente/" class="red-text text-darken-4"><h2><i class="fa fa-linkedin-square" aria-hidden="true"></i> Linked In</h2></a>
+                <div class="col-content white-text">
+                    <a href="https://www.linkedin.com/in/marcov4lente/" class="cyan-text text-darken-2"><h2><i class="fa fa-linkedin-square" aria-hidden="true"></i></h2></a>
+                </div>
             </div>
             <div class="col s6 center-align">
-                    <a href="https://instagram.com/marcov4lente" class="red-text text-darken-4"><h2><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</h2></a>
+                <div class="col-content white-text">
+                    <a href="https://instagram.com/marcov4lente" class="cyan-text text-darken-2"><h2><i class="fa fa-instagram" aria-hidden="true"></i></h2></a>
+                </div>
             </div>
-        </div>
-        <div class="row hide-on-med-and-up">
-            <hr>
         </div>
         <div class="row">
             <div class="container">
                 <div class="col s12 m6">
-                    <h2 class="red-text text-darken-4"><i class="fa fa-globe" aria-hidden="true"></i></i> Global Experience</h2>
-                    <p>
-                        With eight years of practical commercial experience, I've had fantastic opportunities to work with companies and clients from across Europe and Africa. I have therefore had the great pleasure of developing web applications for a wide variety of purposes.
-                    </p>
+                    <div class="col-content">
+                        <h2 class="cyan-text text-darken-2"><i class="fa fa-globe" aria-hidden="true"></i></i> Global Experience</h2>
+                        <p>
+                            With eight years of practical commercial experience, I've had fantastic opportunities to work with companies and clients from across Europe and Africa. I have therefore had the great pleasure of developing web applications for a wide variety of purposes.
+                        </p>
+                    </div>
                 </div>
                 <div class="col s12 m6">
-                    <h2 class="red-text text-darken-4"><i class="fa fa-code" aria-hidden="true"></i> Best Practices</h2>
-                    <p>
-                        I strive to develop web solutions with a keen adherence to quality and standards. I am a firm believer of standards and best practices, which I feel is the cornerstone of a beautifully built application.
-                    </p>
+                    <div class="col-content">
+                        <h2 class="cyan-text text-darken-2"><i class="fa fa-code" aria-hidden="true"></i> Best Practices</h2>
+                        <p>
+                            I strive to develop web solutions with a keen adherence to quality and standards. I am a firm believer of standards and best practices, which I feel is the cornerstone of a beautifully built application.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
         <footer class="page-footer white">
-            <div class="copyright blue-grey-text text-darken-2">
+            <div class="col-content blue-grey-text text-darken-2">
                 <p class="center-align">
                     © <?php print date('Y') ?> Copyright MarcoV4lente, property of Marco Valente, all rights reserved.
                 </p>
