@@ -9,7 +9,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="msapplication-tap-highlight" content="no">
 
-        <!--link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32"-->
+        <link rel="icon" href="images/favicon.png" sizes="32x32">
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css"  media="screen,projection"/>
