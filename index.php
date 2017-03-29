@@ -63,20 +63,34 @@
         </div>
         <div class="row">
             <div class="container">
-                <div class="col s12 m6">
+                <div class="col s12 m4">
                     <div class="col-content">
-                        <h2 class="cyan-text text-darken-2"><i class="fa fa-globe" aria-hidden="true"></i></i> Global Experience</h2>
+                        <h2><i class="fa fa-globe" aria-hidden="true"></i></i> Global Experience</h2>
                         <p>
                             With eight years of practical commercial experience, I've had fantastic opportunities to work with companies and clients from across Europe and Africa. As a result I've had the great pleasure of developing web applications of many shapes and sizes.
                         </p>
                     </div>
                 </div>
-                <div class="col s12 m6">
+                <div class="col s12 m4">
                     <div class="col-content">
-                        <h2 class="cyan-text text-darken-2"><i class="fa fa-code" aria-hidden="true"></i> Best Practices</h2>
+                        <h2><i class="fa fa-code" aria-hidden="true"></i> Best Practices</h2>
                         <p>
                             I strive to develop web solutions with a keen adherence to quality and standards. I am a firm believer of standards and best practices, which I feel is the cornerstone of any beautifully built application.
                         </p>
+                    </div>
+                </div>
+                <div class="col s12 m4">
+                    <div class="col-content">
+                        <h2><i class="fa fa-bar-chart" aria-hidden="true"></i> Focus</h2>
+                        <p>
+                            My focus is predominantly on bespoke projects and backend heavy applications. Some examples include:
+                        </p>
+                        <ul>
+                            <li><i class="fa fa-caret-right" aria-hidden="true"></i> Back end RESTful APIs.</li>
+                            <li><i class="fa fa-caret-right" aria-hidden="true"></i> Interactive online applications.</li>
+                            <li><i class="fa fa-caret-right" aria-hidden="true"></i> E-commerce portals.</li>
+                            <li><i class="fa fa-caret-right" aria-hidden="true"></i> Bespoke CRM solutions.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
