@@ -26,10 +26,13 @@
                     </a>
                     <ul id="nav-mobile" class="right hide-on-small-only">
                         <li>
-                            <a href="https://www.linkedin.com/in/marcov4lente/" class="cyan-text text-darken-2"><i class="fa fa-linkedin-square" aria-hidden="true"></i> Linked In</a>
+                            <a href="https://www.linkedin.com/in/marcov4lente/" class="cyan-text text-darken-2" target="blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i> Linked In</a>
                         </li>
                         <li>
-                            <a href="https://instagram.com/marcov4lente" class="cyan-text text-darken-2"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a>
+                            <a href="https://github.com/marcov4lente/" class="cyan-text text-darken-2" target="blank"><i class="fa fa-github-square" aria-hidden="true"></i> GitHub</a>
+                        </li>
+                        <li>
+                            <a href="https://instagram.com/marcov4lente" class="cyan-text text-darken-2" target="blank"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a>
                         </li>
                     </ul>
                 </div>
@@ -50,14 +53,19 @@
             </div>
         </div>
         <div class="row hide-on-med-and-up blue-grey lighten-5">
-            <div class="col s6 center-align">
+            <div class="col s4 center-align">
                 <div class="col-content white-text">
-                    <a href="https://www.linkedin.com/in/marcov4lente/" class="cyan-text text-darken-2"><h2><i class="fa fa-linkedin-square" aria-hidden="true"></i></h2></a>
+                    <a href="https://www.linkedin.com/in/marcov4lente/" class="cyan-text text-darken-2" target="blank"><h2><i class="fa fa-linkedin-square" aria-hidden="true"></i></h2></a>
                 </div>
             </div>
-            <div class="col s6 center-align">
+            <div class="col s4 center-align">
                 <div class="col-content white-text">
-                    <a href="https://instagram.com/marcov4lente" class="cyan-text text-darken-2"><h2><i class="fa fa-instagram" aria-hidden="true"></i></h2></a>
+                    <a href="https://github.com/marcov4lente" class="cyan-text text-darken-2" target="blank"><h2><i class="fa fa-github-square" aria-hidden="true"></i></h2></a>
+                </div>
+            </div>
+            <div class="col s4 center-align">
+                <div class="col-content white-text">
+                    <a href="https://instagram.com/marcov4lente" class="cyan-text text-darken-2" target="blank"><h2><i class="fa fa-instagram" aria-hidden="true"></i></h2></a>
                 </div>
             </div>
         </div>
