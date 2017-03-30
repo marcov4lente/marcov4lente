@@ -4,7 +4,6 @@ var cleancss = require('gulp-clean-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
-var jekyll = require('gulp-jekyll');
 
 
 // compile scss to css
@@ -24,17 +23,6 @@ gulp.task('scripts', function() {
         .pipe(concat('app.js'))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('./public'));
-});
-
-
-gulp.task('default', function () {
-    gulp.src(['./content/index.html', './_layouts/*.html', './_posts/*.{markdown,md}'])
-        .pipe(jekyll({
-            source: './content',
-            destination: './articles/',
-            bundleExec: true
-        }))
-        .pipe(gulp.dest('./articles/'));
 });
 
 
