@@ -2,9 +2,9 @@
 layout: article
 title:  "Installing a Letsencrypt.org SSL certificate on an Ubuntu 16.04 server"
 date:   2017-04-01 10:04:54 +0000
-description: This guide will outline the installation of the above requirements on an Ubuntu 16.04 Linux operating system.
+description: Installing a Letsencrypt.org SSL certificate on an Ubuntu 16.04 server on an Ubuntu 16.04 Linux operating system.
 categories: Linux
-permalink: articles/installing-a-letsencrypt-SSL-certificate-on-an-Ubuntu-16-04-xenial-server.html
+permalink: articles/installing-a-letsencrypt-ssl-certificate-on-an-Ubuntu-16-04-xenial-server.html
 ---
 ## Install Certbot
 Add the Certbot repositories and install it.
