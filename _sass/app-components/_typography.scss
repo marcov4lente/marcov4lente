@@ -10,6 +10,10 @@ h1, h2, h3, h4, h5, h6 {
     color: $text-color;
 }
 
+h3, h4, h5, h6 {
+    padding-top: 30px;
+}
+
 a {
     text-decoration: none;
 }
@@ -20,12 +24,15 @@ p {
 
 /**########################################**/
 
-.hero-quote {
-    font-weight: light;
-    font-size: 1.2em;
-    text-align: left;
-}
-
 .page-footer {
     font-size: 0.8em;
 }
+
+pre {
+    font-family: monospace;
+}
+
+code {
+
+}
+

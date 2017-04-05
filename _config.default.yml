@@ -17,11 +17,15 @@ title: MarcoV4lente - Web Application Developer
 email: marcov4lente@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   Hi, I'm Marco! I'm a web application developer! Web technologies fascinate me, and I find pleasure in conceptualising and building functional web applications that serve purpose.
-baseurl: ""
-url: "https://marcov4lente.com"
+
+# Social
 linkedin_username: marcov4lente
 github_username:  marcov4lente
 instagram_username:  marcov4lente
+
+# paths
+baseurl: "/x/m/_site"
+url: "https://marcov4lente.com"
 
 permalink: /articles/:title/
 
