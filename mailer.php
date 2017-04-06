@@ -1,73 +1,109 @@
 <?php
-/**
- * This example shows settings to use when sending via Google's Gmail servers.
- * This uses traditional id & password authentication - look at the gmail_xoauth.phps
- * example to see how to use XOAUTH2.
- */
 
-//Import PHPMailer classes into the global namespace
-use PHPMailer\PHPMailer\PHPMailer;
+class Mailer
+{
 
-require 'mail/PHPMailer.php';
+    public function validateRequest()
+    {
+        if(!isset($_SERVER['REQUEST_METHOD']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->ignoreRequest();
+        }
+    }
 
-//Create a new PHPMailer instance
-$mail = new PHPMailer;
+    public function validateCaptcha()
+    {
+        if (rpHash($_POST['areYouHuman']) != $_POST['areYouHuman'])  {
+            $this->ignoreRequest();
+        }
 
-//Tell PHPMailer to use SMTP
-$mail->isSMTP();
+    }
 
-//Enable SMTP debugging
-// 0 = off (for production use)
-// 1 = client messages
-// 2 = client and server messages
-$mail->SMTPDebug = 2;
 
-//Set the hostname of the mail server
-$mail->Host = 'smtp.gmail.com';
-// use
-// $mail->Host = gethostbyname('smtp.gmail.com');
-// if your network does not support SMTP over IPv6
+    public function sendMail()
+    {
 
-//Set the SMTP port number - 587 for authenticated TLS, a.k.a. RFC4409 SMTP submission
-$mail->Port = 587;
+        use PHPMailer\PHPMailer\PHPMailer;
 
-//Set the encryption system to use - ssl (deprecated) or tls
-$mail->SMTPSecure = 'tls';
+        require 'mailer/PHPMailer.php';
+        require 'mailer/SMTP.php';
 
-//Whether to use SMTP authentication
-$mail->SMTPAuth = true;
+        $mail = new PHPMailer;
+        $mail->isSMTP();
 
-//Username to use for SMTP authentication - use full email address for gmail
-$mail->Username = "username@gmail.com";
+        //Enable SMTP debugging
+        // 0 = off (for production use)
+        // 1 = client messages
+        // 2 = client and server messages
+        $mail->SMTPDebug = 2;
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 587;
+        $mail->SMTPSecure = 'tls';
+        $mail->SMTPAuth = true;
+        $mail->Username = "marcov4lente@gmail.com";
+        $mail->Password = "hjcwbwnkbquyptvb";
+        $mail->setFrom('marcov4lente@gmail.com', 'MarcoV4lente.com');
+        $mail->addReplyTo($_POST['email'], $_POST['name']);
+        $mail->addAddress('marcov4lente@gmail.com', 'Marco Valente');
+        $mail->Subject = 'MarcoV4lente.com contact form submission';
 
-//Password to use for SMTP authentication
-$mail->Password = "yourpassword";
+        $message = '
+        <strong>Name:</strong> '.$_POST['name'].'<br>
+        <strong>Email:</strong> '.$_POST['email'].'<br>
+        <strong>Message:</strong> '.$_POST['message'].'<br>';
 
-//Set who the message is to be sent from
-$mail->setFrom('from@example.com', 'First Last');
+        $mail->msgHTML($message);
+        $mail->AltBody = strip_tags(str_replace('<br>', "\n", $message));
 
-//Set an alternative reply-to address
-$mail->addReplyTo('replyto@example.com', 'First Last');
+        if (!$mail->send()) {
+            $this->processError()
+        }
 
-//Set who the message is to be sent to
-$mail->addAddress('whoto@example.com', 'John Doe');
+        $this->processSuccess()
+    }
 
-//Set the subject line
-$mail->Subject = 'PHPMailer GMail SMTP test';
 
-//Read an HTML message body from an external file, convert referenced images to embedded,
-//convert HTML into a basic plain-text alternative body
-$mail->msgHTML(file_get_contents('contents.html'), dirname(__FILE__));
+    private function processSuccess()
+    {
+        header('Location: contact-thank-you.html');
+            exit;
 
-//Replace the plain text body with one created manually
-$mail->AltBody = 'This is a plain-text message body';
+    }
 
-//Attach an image file
-$mail->addAttachment('images/phpmailer_mini.png');
 
-//send the message, check for errors
-if (!$mail->send()) {
-    header('Location: error.html');
-} else {
-    header('Location: thank-you.html');
+    private function processError()
+    {
+        header('Location: error.html');
+            exit;
+
+    }
+
+
+    private function ignoreRequest()
+    {
+        header('Location: index.html');
+            exit;
+
+    }
+
+
+    private function rpHash($value)
+    {
+        $hash = 5381;
+        $value = strtoupper($value);
+
+        for($i = 0; $i < strlen($value); $i++) {
+            $hash = (($hash << 5) + $hash) + ord(substr($value, $i));
+        }
+
+        return $hash;
+    }
 }
+
+$m = New Mailer;
+$m->validateRequest();
+$m->validateCaptcha();
+$m->sendMail();
+
+
+
+
