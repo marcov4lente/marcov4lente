@@ -1,5 +1,7 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+
 class Mailer
 {
 
@@ -22,7 +24,7 @@ class Mailer
     public function sendMail()
     {
 
-        use PHPMailer\PHPMailer\PHPMailer;
+
 
         require 'mailer/PHPMailer.php';
         require 'mailer/SMTP.php';
@@ -55,10 +57,10 @@ class Mailer
         $mail->AltBody = strip_tags(str_replace('<br>', "\n", $message));
 
         if (!$mail->send()) {
-            $this->processError()
+            $this->processError();
         }
 
-        $this->processSuccess()
+        $this->processSuccess();
     }
 
 
