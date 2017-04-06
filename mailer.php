@@ -24,8 +24,6 @@ class Mailer
     public function sendMail()
     {
 
-
-
         require 'mailer/PHPMailer.php';
         require 'mailer/SMTP.php';
 
@@ -67,7 +65,7 @@ class Mailer
     private function processSuccess()
     {
         header('Location: contact-thank-you.html');
-            exit;
+        exit;
 
     }
 
@@ -75,7 +73,7 @@ class Mailer
     private function processError()
     {
         header('Location: error.html');
-            exit;
+        exit;
 
     }
 
@@ -83,7 +81,7 @@ class Mailer
     private function ignoreRequest()
     {
         header('Location: index.html');
-            exit;
+        exit;
 
     }
 
