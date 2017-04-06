@@ -7,7 +7,7 @@ categories: Linux
 permalink: articles/lemp-linux-nginX-mysql-php-server-set-up.html
 ---
 
-## Update / Upgrade
+## Update / upgrade operating system
 Install any pending system updates.
 ```
 $ sudo apt-get update

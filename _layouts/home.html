@@ -6,7 +6,7 @@
     </head>
     <body>
         {% include navigation-bar.html %}
-        <div class="row hero">
+        <div class="row hero hero-main">
             <div class="container">
                 <div class="col s12">
                     <div class="section white-text">
@@ -56,36 +56,35 @@
         </div>
         <form action="mailer.php">
             <div class="row">
-                <div class="col s12">
-                    <div class="card">
-                    <div class="card-content">
-                        <span class="card-title">Contact</span>
-                        <div>
-                            <div class="input-field col s12">
-                                <i class="prefix fa fa-user-o" aria-hidden="true"></i>
-                                <input id="name" name="name" type="text" class="validate">
-                                <label for="email">Name</label>
-                            </div>
-                            <div class="input-field col s12">
-                                <i class="prefix fa fa-envelope-open-o" aria-hidden="true"></i>
-                                <input id="email" name="email" type="email" class="validate">
-                                <label for="email">Email</label>
-                            </div>
-                            <div class="input-field col s12">
-                                <i class="prefix fa fa-comment-o" aria-hidden="true"></i>
-                                <textarea id="message" name="message" class="materialize-textarea"></textarea>
-                                <label for="email">Message</label>
-                            </div>
-                            <div class="input-field col s12">
-                                <i class="prefix fa fa-comment-o" aria-hidden="true"></i>
-                                <input id="areYouHuman" name="areYouHuman" type="text">
-                                <label for="email">Are you human?</label>
+                <div class="container">
+                    <div class="col s12">
+                        <div class="card">
+                        <div class="card-content">
+                            <span class="card-title">Contact</span>
+                            <div>
+                                <div class="input-field">
+                                    <input id="name" name="name" type="text" class="validate">
+                                    <label for="email">Name</label>
+                                </div>
+                                <div class="input-field">
+                                    <input id="email" name="email" type="email" class="validate">
+                                    <label for="email">Email</label>
+                                </div>
+                                <div class="input-field">
+                                    <textarea id="message" name="message" class="materialize-textarea"></textarea>
+                                    <label for="email">Message</label>
+                                </div>
+                                <div class="input-field">
+                                    <label for="email">Are you human? (click catcha to regenerate)</label>
+                                    <input id="areYouHuman" name="areYouHuman" type="text">
+
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-action">
-                        <button type="btn submit">submit</button>
-                    </div>
+                        <div class="card-action">
+                            <button class="btn" type="submit">submit</button>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -13,7 +13,7 @@ gulp.task('scripts', function() {
         .pipe(uglify())
         .pipe(concat('app.js'))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('.'));
+        .pipe(gulp.dest('./_site/'));
 });
 
 
