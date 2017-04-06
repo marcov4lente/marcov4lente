@@ -5,6 +5,11 @@ use PHPMailer\PHPMailer\PHPMailer;
 class Mailer
 {
 
+
+    /**
+     * @param null
+     * @return void
+     **/
     public function validateRequest()
     {
         if(!isset($_SERVER['REQUEST_METHOD']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -12,19 +17,31 @@ class Mailer
         }
     }
 
+
+    /**
+     * @param null
+     * @return void
+     **/
     public function validateCaptcha()
     {
-        if (rpHash($_POST['areYouHuman']) != $_POST['areYouHuman'])  {
+
+        if ($this->rpHash($_POST['areYouHuman']) != $_POST['areYouHumanHash'])  {
+            die('ss');
             $this->ignoreRequest();
         }
 
     }
 
 
+    /**
+     * @param null
+     * @return void
+     **/
     public function sendMail()
     {
 
         require 'mailer/PHPMailer.php';
+        require 'mailer/Exception.php';
         require 'mailer/SMTP.php';
 
         $mail = new PHPMailer;
@@ -62,6 +79,10 @@ class Mailer
     }
 
 
+    /**
+     * @param null
+     * @return void
+     **/
     private function processSuccess()
     {
         header('Location: contact-thank-you.html');
@@ -70,6 +91,10 @@ class Mailer
     }
 
 
+    /**
+     * @param null
+     * @return void
+     **/
     private function processError()
     {
         header('Location: error.html');
@@ -78,6 +103,10 @@ class Mailer
     }
 
 
+    /**
+     * @param null
+     * @return void
+     **/
     private function ignoreRequest()
     {
         header('Location: index.html');
@@ -86,16 +115,45 @@ class Mailer
     }
 
 
+    /**
+     * @param string $valua
+     * @return void
+     **/
     private function rpHash($value)
     {
         $hash = 5381;
         $value = strtoupper($value);
 
         for($i = 0; $i < strlen($value); $i++) {
-            $hash = (($hash << 5) + $hash) + ord(substr($value, $i));
+            // 32 bit OS
+            // $hash = (($hash << 5) + $hash) + ord(substr($value, $i));
+            // 64 bit OS
+            $hash = ($this->leftShift32($hash, 5) + $hash) + ord(substr($value, $i));
         }
 
         return $hash;
+    }
+
+
+    /**
+     * @param string $number
+     * @param integer $steps
+     * @return void
+     **/
+    function leftShift32($number, $steps)
+    {
+        // convert to binary (string)
+        $binary = decbin($number);
+        // left-pad with 0's if necessary
+        $binary = str_pad($binary, 32, "0", STR_PAD_LEFT);
+        // left shift manually
+        $binary = $binary.str_repeat("0", $steps);
+        // get the last 32 bits
+        $binary = substr($binary, strlen($binary) - 32);
+        // if it's a positive number return it
+        // otherwise return the 2's complement
+        return ($binary{0} == "0" ? bindec($binary) :
+        -(pow(2, 31) - bindec(substr($binary, 1))));
     }
 }
 
