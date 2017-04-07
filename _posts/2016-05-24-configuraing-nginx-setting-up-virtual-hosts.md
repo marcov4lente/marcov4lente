@@ -1,7 +1,7 @@
 ---
 layout: article
 title: "Configuraing and setting up website on NginX"
-date: 2017-01-24 10:04:54 +0000
+date: 2016-05-24 19:14:54 +0000
 description: Configuraing and setting up website on NginX.
 categories: Linux
 permalink: articles/configuraing-and-setting-up-website-on-nginX.html

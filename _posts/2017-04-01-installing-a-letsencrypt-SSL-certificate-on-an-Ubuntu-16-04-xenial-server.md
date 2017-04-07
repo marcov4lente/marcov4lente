@@ -1,7 +1,7 @@
 ---
 layout: article
 title:  "Installing a Letsencrypt.org SSL certificate on an Ubuntu 16.04 server"
-date:   2017-04-01 10:04:54 +0000
+date:   2017-04-01 10:06:54 +0000
 description: Installing a Letsencrypt.org SSL certificate on an Ubuntu 16.04 server on an Ubuntu 16.04 Linux operating system.
 categories: Linux
 permalink: articles/installing-a-letsencrypt-ssl-certificate-on-an-Ubuntu-16-04-xenial-server.html

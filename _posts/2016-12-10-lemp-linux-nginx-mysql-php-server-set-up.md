@@ -1,7 +1,7 @@
 ---
 layout: article
 title:  "LEMP (Linux, NginX, MySQL, PHP) server set up"
-date:   2016-12-10 10:04:54 +0000
+date:   2016-12-10 17:54:54 +0000
 description: How to install and set up a LEMP (Linux, NginX, MySQL, PHP) server.
 categories: Linux
 permalink: articles/lemp-linux-nginX-mysql-php-server-set-up.html

@@ -1,7 +1,7 @@
 ---
 layout: article
 title:  "Linux File and Folder Permissions"
-date:   2016-11-22 10:04:54 +0000
+date:   2015-11-22 14:44:54 +0000
 description: Quick Linux file and folder permissions management cheat sheet.
 categories: Linux
 permalink: articles/linux-file-and-folder-permissions.html

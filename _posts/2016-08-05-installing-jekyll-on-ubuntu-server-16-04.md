@@ -1,7 +1,7 @@
 ---
 layout: article
 title:  "Installing Jekyll on ubuntu 16.04"
-date:   2017-04-05 10:04:54 +0000
+date:   2016-08-05 11:45:54 +0000
 description: This guide will outline the installation of Jekyll on an Ubuntu 16.04 Linux operating system.
 categories: Linux
 permalink: articles/installing-jekyll-on-ubuntu-server-16-04-xenial.html
