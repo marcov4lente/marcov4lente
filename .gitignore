@@ -3,4 +3,4 @@ _config.yml
 .jekyll-metadata
 .node_modules
 .mailer-config.php
-._SITE/mailer-config.php
+._site/mailer-config.php
