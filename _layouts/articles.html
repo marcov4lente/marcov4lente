@@ -14,9 +14,9 @@
                     <ul class="collection z-depth-1">
                         {% for post in paginator.posts %}
                             <li class="collection-item">
-                                <h3 class="title"><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h3>
+                                <h3 class="title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
                                 <p>
-                                    {{ post.description }}...<a href="{{ site.baseurl }}{{ post.url }}">read more.</a><br>
+                                    {{ post.description }}...<a href="{{ post.url }}">read more.</a><br>
                                     {{ post.date | date_to_long_string  }}
                                 </p>
                             </li>
