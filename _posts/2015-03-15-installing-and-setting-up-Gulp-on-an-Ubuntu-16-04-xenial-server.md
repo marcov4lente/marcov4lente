@@ -2,11 +2,11 @@
 layout: article
 title:  "Installing and setting up Gulp on an Ubuntu 16.04 Server"
 date:   2015-03-15 13:34:54 +0000
-description: This guide will outline the installation of the Node and NPM on an Ubuntu 16.04 Linux operating system.
+description: This guide will outline the installation of Node.js and NPM (Node Package Manager) on an Ubuntu 16.04 Linux operating system.
 categories: Linux
 permalink: articles/installing-and-setting-up-Gulp-on-an-Ubuntu-16-04-xenial-server.html
 ---
-An outline of what is to be done.
+An outline of what the installation process consists of.
 - Installation
 - Install Node packages on a Vagrant virtual machine
 - Install Node packages on a Vagrant physical machine
@@ -16,7 +16,7 @@ An outline of what is to be done.
 - Troubleshooting
 
 ## Installation
-Installing Node and NPM on Ubuntu Linux (if not already installed), using the Node maintained Ubuntu repos.
+Installing Node and NPM on Ubuntu Linux (if not already installed), using the Node maintained Ubuntu repositories.
 ```
 $ curl -sL https://deb.nodesource.com/setup | sudo bash -
 $ sudo apt-get install nodejs
@@ -25,15 +25,14 @@ $ sudo ln -s /usr/bin/nodejs /usr/bin/node
 
 ```
 
-Installing Gulp:
+Installing Gulp.
 ```
 $ sudo npm install --global gulp
 $ sudo npm install -g gulp-cli
 ```
 
 
-## Install Node packages on a Vagrant virtual machine
-Install the above defined packages to the project:
+Install Node packages on a Vagrant virtual machine.
 ```
 $ npm install gulp --no-bin-links
 $ npm install gulp-util --no-bin-links
@@ -46,8 +45,7 @@ $ npm install gulp-sourcemaps --no-bin-links
 ```
 This will create a node_modules directory in the project root.
 
-## Install Node packages on a physical machine
-Install the above defined packages to the project:
+Or, install Node packages on a physical machine
 ```
 $ npm install gulp --g
 $ npm install gulp-util --g
@@ -61,7 +59,7 @@ $ npm install gulp-sourcemaps --g
 This will create a node_modules directory in the project root.
 
 
-## Initiate the Project
+## Initiate a Project
 Create a package.json file in the root of the project.
 ```
 {
@@ -95,37 +93,44 @@ Add the following package requirements to the package.json.
     "gulp-sourcemaps": "latest"
 }
 ```
-### gulp
+**gulp**
+
 npmjs.com definition:The streaming build system
 https://www.npmjs.com/package/gulp
 
-### gulp-util
+**gulp-util**
+
 npmjs.com definition: none.
 https://www.npmjs.com/package/gulp-util
 
-### gulp-sass
+**gulp-sass**
+
 npmjs.com definition: Sass plugin for Gulp..
 https://www.npmjs.com/package/gulp-sass
 
-### coffee-gulp
+**coffee-gulp**
+
 npmjs.com definition: A tiny module which wraps Gulp to use CoffeeScript for your gulpfile.
 https://www.npmjs.com/package/coffee-gulp
 
-### gulp-uglify
+**gulp-uglify**
+
 npmjs.com definition: Minify files with UglifyJS.
 https://www.npmjs.com/package/gulp-uglify
 
-### gulp-concat
+**gulp-concat**
+
 npmjs.com definition: Concatenates files.
 https://www.npmjs.com/package/gulp-concat
 
-### gulp-connect
+**gulp-connect**
+
 npmjs.com definition: Gulp plugin to run a webserver (with LiveReload).
 https://www.npmjs.com/package/gulp-connect
 
 
 
-## Configuring the Gulp File (gulpfile.js)
+## Ggulpfile.js
 The Gulp File defines the Gulp tasks to be carried out. This resides in the root of the project. A sample Gulp File (based on https://www.npmjs.com/package/gulp) as follows:
 ```
 var gulp = require('gulp');
@@ -169,7 +174,7 @@ gulp.task('default', ['watch', 'scripts', 'styles']);
 
 ```
 
-The above Gulp FIle configuration is based on that in the Gulp documentation https://www.npmjs.com/package/gulp
+The above Gulp File configuration is based on that in the Gulp documentation https://www.npmjs.com/package/gulp
 
 ## Executing Gulp
 This will launch a persistant instance of gulp, which will watch the defined folders for changes and publish them to the defined destination files.
@@ -178,7 +183,7 @@ $ gulp
 ```
 
 ## Troubleshooting
-### NPM error
+NPM error
 
 ```
 npm ERR! File: /path/to/file
@@ -191,7 +196,7 @@ npm ERR! Tell the package author to fix their package.json file. JSON.parse
 
 Solution: Correct the JSON syntax errors in package.json.
 
-### CLI error (Windows)
+CLI error (Windows)
 ```
 'gulp' is not recognized as an internal or external command,
 operable program or batch file.

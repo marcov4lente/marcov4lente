@@ -31,7 +31,7 @@ If this process fails with a "...Failed authorization procedure ... urn:acme:err
     }
 ```
 
-Once done, the a success message should pop up.
+Once done, a success message, similiar to the one below, should pop up.
 ```
 ...
  - Congratulations! Your certificate and chain have been saved at
@@ -41,7 +41,7 @@ Once done, the a success message should pop up.
 
 
 ## Configure Nginx
-### Inside the main server block, update:
+Inside the main server block, configure the SSH certificate as follows:
 ```
     # listen 80;
     # listen [::]:80;
@@ -53,9 +53,7 @@ Once done, the a success message should pop up.
     ssl_certificate_key /etc/letsencrypt/live/marcov4lente.com/privkey.pem;
 ```
 
-
-### Outside the main server block
-Add an additional server block to redirect HTTP traffic to HTTPS.
+Outside the main server block aAdd an additional server block to redirect HTTP traffic to HTTPS.
 ```
     server {
         listen 80;

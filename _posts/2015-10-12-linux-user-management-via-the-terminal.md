@@ -6,17 +6,19 @@ description: Linux user management via the terminal.
 categories: Linux
 permalink: articles/linux-user-management-via-the-terminal.html
 ---
-## Create new user
+**Create new user**
+
 ```
 $ adduser username
 ```
+**Add user to sudo group**
 
-## Add user to sudo group
 ```
 $ usermod -aG sudo username
 ```
 
-## Change password
+**Change password**
+
 ```
 $ passwd
 ```

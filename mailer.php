@@ -26,8 +26,7 @@ class Mailer
     {
 
         if ($this->rpHash($_POST['areYouHuman']) != $_POST['areYouHumanHash'])  {
-            die('ss');
-            $this->ignoreRequest();
+            $this->incorrectCaptcha();
         }
 
     }
@@ -97,7 +96,11 @@ class Mailer
      **/
     private function processError()
     {
-        header('Location: error.html');
+
+        print '<script>
+                alert("Oh no!, something went wrong with your form submission. Please try again later.");
+                window.location.href = window.history.back(1);
+            </script>';
         exit;
 
     }
@@ -109,9 +112,28 @@ class Mailer
      **/
     private function ignoreRequest()
     {
-        header('Location: index.html');
+
+        print '<script>
+                alert("Thank you for you form submission! I\'ll be in contact soon!");
+                window.location.href = window.history.back(1);
+            </script>';
         exit;
 
+    }
+
+
+    /**
+     * @param null
+     * @return void
+     **/
+    private function incorrectCaptcha()
+    {
+
+        print '<script>
+                alert("Oh no!, the validation code you entered in is incorrect. Please press your browser\'s back button and try again.");
+                window.location.href = window.history.back(1);
+            </script>';
+        exit;
     }
 
 

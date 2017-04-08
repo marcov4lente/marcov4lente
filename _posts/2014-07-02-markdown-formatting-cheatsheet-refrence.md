@@ -1,3 +1,4 @@
+
 ---
 layout: article
 title: Markdown formatting
@@ -25,7 +26,7 @@ permalink: articles/markdown-formatting-cheatsheet-reference.html
 ###### H6 Heading
 
 
-## Decoration
+## Text decoration
 ```
 __This is bold text__
 **This is bold text**
@@ -58,7 +59,7 @@ ___
 
 
 ## Lists
-#### Unordered lists
+**Unordered lists## The environment
 ```
 - List item 1
 - List item 2
@@ -91,7 +92,7 @@ ___
 * List item 2
 * List item 3
 
-#### Ordered lists
+**Ordered lists**
 ```
 1. List item 1
 2. List item 2
@@ -103,7 +104,7 @@ ___
 3. List item 3
 
 
-#### Paragraph lists
+**Paragraph lists**
 ```
 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 

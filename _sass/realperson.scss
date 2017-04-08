@@ -2,6 +2,7 @@
 .realperson-challenge {
 	display: block;
 	color: #000;
+	position:relative;
 }
 .realperson-text {
 	font-family: "Courier New",monospace !important;
@@ -9,7 +10,9 @@
 	font-weight: bold;
 	letter-spacing: -1px;
 	line-height: 3px;
-	float:right;
+	position:absolute;
+	right:0;
+	top: 60px;
 }
 .realperson-regen {
 	padding-top: 4px;

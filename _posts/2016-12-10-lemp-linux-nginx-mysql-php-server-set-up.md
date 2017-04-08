@@ -7,30 +7,30 @@ categories: Linux
 permalink: articles/lemp-linux-nginX-mysql-php-server-set-up.html
 ---
 
-## Update / upgrade operating system
-Install any pending system updates.
+## Prepartion
+Update / upgrade the operating system by installing any pending system updates.
 ```
 $ sudo apt-get update
 $ sudo apt-get -y upgrade
 ```
 
-## Install nginx
+## Installation
+Install nginx
 ```
 $ sudo apt-get install -y nginx
 ```
 
-## Enable UFW access if UFA is active
+Enable UFW access if UFA is active.
 ```
 $ ufw allow 'Nginx HTTP'
 ```
 
-## Install MySQL server
+Install MySQL server.
 ```
 $ apt-get install -y mysql-server
 ```
 
-## Install PHP 7.0
-Along with a couple of PHP extras.
+Install PHP 7.0, along with a couple of PHP extras.
 ```
 $ sudo apt-get install -y php7.0
 $ sudo apt-get install -y php-fpm
@@ -41,7 +41,7 @@ $ sudo apt-get install -y php-xml
 $ sudo apt-get install -y php-zip
 ```
 
-## Configure PHP
+Configure PHP.
 ```
 $ nano /etc/php/7.0/fpm/php.ini
 ```
@@ -51,27 +51,27 @@ Set:
 cgi.fix_pathinfo = 0
 ```
 
-### Restart nginx-php
+Restart nginx-php.
 ```
 $ systemctl restart php7.0-fpm
 ```
 
-## Restart nginx
+Restart nginx.
 ```
 $ systemctl reload nginx
 ```
 
-## Install git
+Install git.
 ```
 $ apt-get install git
 ```
 
-## Install composer
+Install composer.
 ```
 $ curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 ```
 
-## Install phpunit
+Install phpunit
 ```
 $ wget https://phar.phpunit.de/phpunit-6.0.phar
 $ chmod +x phpunit-6.0.phar
