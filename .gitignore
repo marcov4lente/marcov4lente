@@ -1,6 +1,8 @@
+_site/*
+!_site/.gitignore
 _config.yml
 .sass-cache
 .jekyll-metadata
 .node_modules
 .mailer-config.php
-._site/mailer-config.php
+
