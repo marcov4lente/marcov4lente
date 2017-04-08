@@ -1,1 +1,8 @@
-
+sudo npm install -g gulp
+sudo npm install -g gulp-util
+sudo npm install -g gulp-sass
+sudo npm install -g gulp-clean-css
+sudo npm install -g gulp-uglify
+sudo npm install -g  gulp-concat
+sudo npm install -g gulp-connect
+sudo npm install -g gulp-sourcemaps

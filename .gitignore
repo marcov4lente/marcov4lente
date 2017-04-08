@@ -3,6 +3,5 @@ _site/*
 _config.yml
 _sass-cache
 jekyll-metadata
-node_modules
 mailer-config.php
 

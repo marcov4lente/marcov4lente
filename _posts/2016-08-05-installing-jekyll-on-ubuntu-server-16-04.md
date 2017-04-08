@@ -64,6 +64,11 @@ Install Bundler, a jekyll dependency
 $ sudo gem install bundler
 ```
 
+Install  Bundler
+```
+$ sudo bundle install
+```
+
 Install Jekyll
 ```
 $ sudo gem install jekyll

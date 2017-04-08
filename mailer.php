@@ -87,7 +87,7 @@ class Mailer
     {
 
         print '<script>
-                alert("Thank you for you form submission! I\'ll be in contact soon!");
+                alert("Thank you for your form submission! I\'ll be in contact soon!");
                 window.location.href = window.history.back(1);
             </script>';
         exit;
@@ -132,7 +132,7 @@ class Mailer
     {
 
         print '<script>
-                alert("Oh no!, the validation code you entered in is incorrect. Please press your browser\'s back button and try again.");
+                alert("Oh no!, the validation code you entered in is incorrect. Please try again.");
                 window.location.href = window.history.back(1);
             </script>';
         exit;

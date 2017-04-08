@@ -27,12 +27,12 @@ $ sudo ln -s /usr/bin/nodejs /usr/bin/node
 
 Installing Gulp.
 ```
-$ sudo npm install --global gulp
+$ sudo npm install -g gulp
 $ sudo npm install -g gulp-cli
 ```
 
 
-Install Node packages on a Vagrant virtual machine.
+Install some usefull Node packages on a Vagrant virtual machine.
 ```
 $ npm install gulp --no-bin-links
 $ npm install gulp-util --no-bin-links
@@ -45,18 +45,18 @@ $ npm install gulp-sourcemaps --no-bin-links
 ```
 This will create a node_modules directory in the project root.
 
-Or, install Node packages on a physical machine
+Or, install some usefull Node packages globaly on a physical machine
 ```
-$ npm install gulp --g
-$ npm install gulp-util --g
-$ npm install gulp-sass --g
-$ npm install gulp-clean-css --g
-$ npm install gulp-uglify --g
-$ npm install obal gulp-concat --g
-$ npm install gulp-connect --g
-$ npm install gulp-sourcemaps --g
+$ sudo npm install -g gulp
+$ sudo npm install -g gulp-util
+$ sudo npm install -g gulp-sass
+$ sudo npm install -g gulp-clean-css
+$ sudo npm install -g gulp-uglify
+$ sudo npm install -g  gulp-concat
+$ sudo npm install -g gulp-connect
+$ sudo npm install -g gulp-sourcemaps
 ```
-This will create a node_modules directory in the project root.
+
 
 
 ## Initiate a Project
