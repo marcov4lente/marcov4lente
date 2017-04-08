@@ -1,7 +1,7 @@
 _site/*
 !_site/.gitignore
 _config.yml
-_sass-cache
+.sass-cache
 jekyll-metadata
 mailer-config.php
 
