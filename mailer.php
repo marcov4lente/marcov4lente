@@ -42,6 +42,7 @@ class Mailer
         require 'mailer/PHPMailer.php';
         require 'mailer/Exception.php';
         require 'mailer/SMTP.php';
+        $mailerConfig = include('mailer-config.php');
 
         $mail = new PHPMailer;
         $mail->isSMTP();
@@ -50,13 +51,13 @@ class Mailer
         // 0 = off (for production use)
         // 1 = client messages
         // 2 = client and server messages
-        $mail->SMTPDebug = 2;
+        $mail->SMTPDebug = 0;
         $mail->Host = 'smtp.gmail.com';
         $mail->Port = 587;
         $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;
-        $mail->Username = "marcov4lente@gmail.com";
-        $mail->Password = "hjcwbwnkbquyptvb";
+        $mail->Username = $mailerConfig['gmailUsername'];
+        $mail->Password = $mailerConfig['gmailPassword'];
         $mail->setFrom('marcov4lente@gmail.com', 'MarcoV4lente.com');
         $mail->addReplyTo($_POST['email'], $_POST['name']);
         $mail->addAddress('marcov4lente@gmail.com', 'Marco Valente');
@@ -84,7 +85,11 @@ class Mailer
      **/
     private function processSuccess()
     {
-        header('Location: contact-thank-you.html');
+
+        print '<script>
+                alert("Thank you for you form submission! I\'ll be in contact soon!");
+                window.location.href = window.history.back(1);
+            </script>';
         exit;
 
     }
@@ -113,10 +118,7 @@ class Mailer
     private function ignoreRequest()
     {
 
-        print '<script>
-                alert("Thank you for you form submission! I\'ll be in contact soon!");
-                window.location.href = window.history.back(1);
-            </script>';
+        header('Location: index.html');
         exit;
 
     }
@@ -183,7 +185,3 @@ $m = New Mailer;
 $m->validateRequest();
 $m->validateCaptcha();
 $m->sendMail();
-
-
-
-

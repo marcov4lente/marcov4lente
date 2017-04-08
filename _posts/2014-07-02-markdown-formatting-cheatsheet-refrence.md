@@ -3,7 +3,7 @@
 layout: article
 title: Markdown formatting
 date: 2014-07-02 10:06:54 +0000
-description: Formattinf content with markdown.
+description: Formatting content with markdown.
 categories: Linux
 permalink: articles/markdown-formatting-cheatsheet-reference.html
 ---
