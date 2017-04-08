@@ -1,0 +1,821 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://marcov4lente.com/marcov4lente.com/_site//feed.xml" rel="self" type="application/atom+xml" /><link href="https://marcov4lente.com/marcov4lente.com/_site//" rel="alternate" type="text/html" /><updated>2017-04-08T11:31:59+00:00</updated><id>https://marcov4lente.com/marcov4lente.com/_site//</id><title type="html">MarcoV4lente - Web Application Developer</title><subtitle>Hi, I'm Marco! I'm a web application developer! Web technologies fascinate me, and I find pleasure in conceptualising and building functional web applications that serve purpose.
+</subtitle><entry><title type="html">Installing a Letsencrypt.org SSL certificate on an Ubuntu 16.04 server</title><link href="https://marcov4lente.com/marcov4lente.com/_site//articles/installing-a-letsencrypt-ssl-certificate-on-an-Ubuntu-16-04-xenial-server.html" rel="alternate" type="text/html" title="Installing a Letsencrypt.org SSL certificate on an Ubuntu 16.04 server" /><published>2017-04-01T10:06:54+00:00</published><updated>2017-04-01T10:06:54+00:00</updated><id>https://marcov4lente.com/marcov4lente.com/_site//articles/installing-a-letsencrypt-SSL-certificate-on-an-Ubuntu-16-04-xenial-server</id><content type="html" xml:base="https://marcov4lente.com/marcov4lente.com/_site//articles/installing-a-letsencrypt-ssl-certificate-on-an-Ubuntu-16-04-xenial-server.html">&lt;h2 id=&quot;install-certbot&quot;&gt;Install Certbot&lt;/h2&gt;
+&lt;p&gt;Add the Certbot repositories and install it.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo add-apt-repository ppa:certbot/certbot
+$ sudo apt-get update
+$ sudo apt-get install certbot
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;install-the-ssl-certificate&quot;&gt;Install the SSL certificate&lt;/h2&gt;
+&lt;p&gt;Using the Webroot option, specifiy the server root and domain name of the website.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo certbot certonly --webroot -w /var/www/marcov4lente.com/ -d marcov4lente.com
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Remember to respond to the interactive command prompts to complete the installation.&lt;/p&gt;
+
+&lt;p&gt;If this process fails with a “…Failed authorization procedure … urn:acme:error:unauthorized :: The client lacks sufficient authorization…” kind of error, enable access to the .well-known directory that Certbot will create fron the NginX config.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    location ~ \.well-known {
+        try_files $uri $uri/ =404;
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Once done, a success message, similiar to the one below, should pop up.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;...
+ - Congratulations! Your certificate and chain have been saved at
+   /etc/letsencrypt/live/example.com/fullchain.pem. Your
+...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;configure-nginx&quot;&gt;Configure Nginx&lt;/h2&gt;
+&lt;p&gt;Inside the main server block, configure the SSH certificate as follows:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    # listen 80;
+    # listen [::]:80;
+
+    listen 443 ssl;
+    listen [::]:443;
+
+    ssl_certificate /etc/letsencrypt/live/marcov4lente.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/marcov4lente.com/privkey.pem;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Outside the main server block aAdd an additional server block to redirect HTTP traffic to HTTPS.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    server {
+        listen 80;
+        server_name example.com www.example.com;
+        return 301 https://$host$request_uri;
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Test for NginX configuration file syntax errors.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo nginx -t
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Restart NginX.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo service nginx restart
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;automatic-certificate-renewal&quot;&gt;Automatic certificate renewal&lt;/h2&gt;
+&lt;p&gt;Automating the certificate renwal can be done via the system’s crontab.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo crontab -e
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Add the following to the crontab.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;30 2 * * 1 /usr/local/sbin/certbot-auto renew &amp;gt;&amp;gt; /var/log/le-renew.log
+35 2 * * 1 /etc/init.d/nginx reload
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">Install Certbot Add the Certbot repositories and install it. $ sudo add-apt-repository ppa:certbot/certbot $ sudo apt-get update $ sudo apt-get install certbot Install the SSL certificate Using the Webroot option, specifiy the server root and domain name of the website. $ sudo certbot certonly --webroot -w /var/www/marcov4lente.com/ -d marcov4lente.com Remember to respond to the interactive command prompts to complete the installation. If this process fails with a “…Failed authorization procedure … urn:acme:error:unauthorized :: The client lacks sufficient authorization…” kind of error, enable access to the .well-known directory that Certbot will create fron the NginX config. location ~ \.well-known { try_files $uri $uri/ =404; } Once done, a success message, similiar to the one below, should pop up. ... - Congratulations! Your certificate and chain have been saved at /etc/letsencrypt/live/example.com/fullchain.pem. Your ... Configure Nginx Inside the main server block, configure the SSH certificate as follows: # listen 80; # listen [::]:80; listen 443 ssl; listen [::]:443; ssl_certificate /etc/letsencrypt/live/marcov4lente.com/fullchain.pem; ssl_certificate_key /etc/letsencrypt/live/marcov4lente.com/privkey.pem; Outside the main server block aAdd an additional server block to redirect HTTP traffic to HTTPS. server { listen 80; server_name example.com www.example.com; return 301 https://$host$request_uri; } Test for NginX configuration file syntax errors. $ sudo nginx -t Restart NginX. $ sudo service nginx restart Automatic certificate renewal Automating the certificate renwal can be done via the system’s crontab. $ sudo crontab -e Add the following to the crontab. 30 2 * * 1 /usr/local/sbin/certbot-auto renew &amp;gt;&amp;gt; /var/log/le-renew.log 35 2 * * 1 /etc/init.d/nginx reload</summary></entry><entry><title type="html">LEMP (Linux, NginX, MySQL, PHP) server set up</title><link href="https://marcov4lente.com/marcov4lente.com/_site//articles/lemp-linux-nginX-mysql-php-server-set-up.html" rel="alternate" type="text/html" title="LEMP (Linux, NginX, MySQL, PHP) server set up" /><published>2016-12-10T17:54:54+00:00</published><updated>2016-12-10T17:54:54+00:00</updated><id>https://marcov4lente.com/marcov4lente.com/_site//articles/lemp-linux-nginx-mysql-php-server-set-up</id><content type="html" xml:base="https://marcov4lente.com/marcov4lente.com/_site//articles/lemp-linux-nginX-mysql-php-server-set-up.html">&lt;h2 id=&quot;prepartion&quot;&gt;Prepartion&lt;/h2&gt;
+&lt;p&gt;Update / upgrade the operating system by installing any pending system updates.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get update
+$ sudo apt-get -y upgrade
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+&lt;p&gt;Install nginx&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install -y nginx
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Enable UFW access if UFA is active.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ufw allow 'Nginx HTTP'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Install MySQL server.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ apt-get install -y mysql-server
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Install PHP 7.0, along with a couple of PHP extras.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install -y php7.0
+$ sudo apt-get install -y php-fpm
+$ sudo apt-get install -y php-mysql
+$ sudo apt-get install -y php-mbstring
+$ sudo apt-get install -y php-gettext
+$ sudo apt-get install -y php-xml
+$ sudo apt-get install -y php-zip
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Configure PHP.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ nano /etc/php/7.0/fpm/php.ini
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Set:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cgi.fix_pathinfo = 0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Restart nginx-php.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ systemctl restart php7.0-fpm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Restart nginx.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ systemctl reload nginx
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Install git.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ apt-get install git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Install composer.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Install phpunit&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ wget https://phar.phpunit.de/phpunit-6.0.phar
+$ chmod +x phpunit-6.0.phar
+$ sudo mv phpunit-6.0.phar /usr/local/bin/phpunit
+$ phpunit --version
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">Prepartion Update / upgrade the operating system by installing any pending system updates. $ sudo apt-get update $ sudo apt-get -y upgrade Installation Install nginx $ sudo apt-get install -y nginx Enable UFW access if UFA is active. $ ufw allow 'Nginx HTTP' Install MySQL server. $ apt-get install -y mysql-server Install PHP 7.0, along with a couple of PHP extras. $ sudo apt-get install -y php7.0 $ sudo apt-get install -y php-fpm $ sudo apt-get install -y php-mysql $ sudo apt-get install -y php-mbstring $ sudo apt-get install -y php-gettext $ sudo apt-get install -y php-xml $ sudo apt-get install -y php-zip Configure PHP. $ nano /etc/php/7.0/fpm/php.ini Set: cgi.fix_pathinfo = 0 Restart nginx-php. $ systemctl restart php7.0-fpm Restart nginx. $ systemctl reload nginx Install git. $ apt-get install git Install composer. $ curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer Install phpunit $ wget https://phar.phpunit.de/phpunit-6.0.phar $ chmod +x phpunit-6.0.phar $ sudo mv phpunit-6.0.phar /usr/local/bin/phpunit $ phpunit --version</summary></entry><entry><title type="html">Installing Jekyll on ubuntu 16.04</title><link href="https://marcov4lente.com/marcov4lente.com/_site//articles/installing-jekyll-on-ubuntu-server-16-04-xenial.html" rel="alternate" type="text/html" title="Installing Jekyll on ubuntu 16.04" /><published>2016-08-05T11:45:54+00:00</published><updated>2016-08-05T11:45:54+00:00</updated><id>https://marcov4lente.com/marcov4lente.com/_site//articles/installing-jekyll-on-ubuntu-server-16-04</id><content type="html" xml:base="https://marcov4lente.com/marcov4lente.com/_site//articles/installing-jekyll-on-ubuntu-server-16-04-xenial.html">&lt;h2 id=&quot;the-environment&quot;&gt;The environment&lt;/h2&gt;
+&lt;p&gt;The basic requirements for Jekyll are:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;GNU/Linux or Apple macOS&lt;/li&gt;
+  &lt;li&gt;Ruby 2.0&lt;/li&gt;
+  &lt;li&gt;RubyGems&lt;/li&gt;
+  &lt;li&gt;GCC&lt;/li&gt;
+  &lt;li&gt;Make&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This guide will outline the installation of the above requirements on an Ubuntu 16.04 Linux operating system.&lt;/p&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+&lt;p&gt;Install Ruby&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install ruby
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Install Ruby Dev package&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install ruby-dev
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Install RubyGems&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install rubygems
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Install GCC - GCC should already be installed on the system.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ gcc -v
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Install Make - Make should already be installed on the system.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ make -v
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Add the gems folder to the system path&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ PATH=$PATH:above/path/to/gems &amp;gt;&amp;gt; ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The Gem directory usually being:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/var/lib/gems/2.3.0/gems
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;jekyll&quot;&gt;Jekyll&lt;/h2&gt;
+&lt;p&gt;Install Bundler, a jekyll dependency&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo gem install bundler
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Install Jekyll&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo gem install jekyll
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Check if the installation was succesfull&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ jekyll --version
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Install the new paginate module ,an optional module to generate paginated content lists.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ gem install jekyll-paginate-v2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Create a new Jekyll site&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ jekyll new sitename
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">The environment The basic requirements for Jekyll are: GNU/Linux or Apple macOS Ruby 2.0 RubyGems GCC Make This guide will outline the installation of the above requirements on an Ubuntu 16.04 Linux operating system. Installation Install Ruby $ sudo apt-get install ruby Install Ruby Dev package $ sudo apt-get install ruby-dev Install RubyGems $ sudo apt-get install rubygems Install GCC - GCC should already be installed on the system. $ gcc -v Install Make - Make should already be installed on the system. $ make -v Add the gems folder to the system path $ PATH=$PATH:above/path/to/gems &amp;gt;&amp;gt; ~/.bash_profile The Gem directory usually being: /var/lib/gems/2.3.0/gems Jekyll Install Bundler, a jekyll dependency $ sudo gem install bundler Install Jekyll $ sudo gem install jekyll Check if the installation was succesfull $ jekyll --version Install the new paginate module ,an optional module to generate paginated content lists. $ gem install jekyll-paginate-v2 Create a new Jekyll site $ jekyll new sitename</summary></entry><entry><title type="html">Configuraing and setting up website on NginX</title><link href="https://marcov4lente.com/marcov4lente.com/_site//articles/configuraing-and-setting-up-website-on-nginX.html" rel="alternate" type="text/html" title="Configuraing and setting up website on NginX" /><published>2016-05-24T19:14:54+00:00</published><updated>2016-05-24T19:14:54+00:00</updated><id>https://marcov4lente.com/marcov4lente.com/_site//articles/configuraing-nginx-setting-up-virtual-hosts</id><content type="html" xml:base="https://marcov4lente.com/marcov4lente.com/_site//articles/configuraing-and-setting-up-website-on-nginX.html">&lt;h2 id=&quot;website-configuration&quot;&gt;Website configuration&lt;/h2&gt;
+&lt;p&gt;Move to the &lt;em&gt;sites-available&lt;/em&gt; directory.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd /etc/nginx/sites-available
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Create a new site configuration file.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo nano marcov4lente.com
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Add the following server configuration to the site config file, replacing the domain and direcotry names appropriately. Then save.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/marcov4lente.com;
+    index index.php index.html index.htm index.nginx-debian.html;
+    server_name marcov4lente.com;
+
+    # enable rewrite
+    location / {
+            try_files $uri $uri/ /index.php?q=$request_uri;
+    }
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+    }
+
+    # deny access to .htaccess files
+    location ~ /\.ht {
+            deny all;
+    }
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Enable the website, by symlinking it’s configuration file to the &lt;em&gt;sites-enabled&lt;/em&gt; folder:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ls -s /etc/nginx/sites-available/marcov4lente.com /etc/nginx/sites-enabled/marcov4lente.com
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Confirm that the server’s configuration files contain no errors.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo nginx -t
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Restart nginx-php&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo systemctl restart nginx
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;done&quot;&gt;Done&lt;/h2&gt;
+&lt;p&gt;If the configured domain name’s DNS is correctly configured, then NginX server should correctly handle incoming requests for the domain name configured.&lt;/p&gt;</content><author><name></name></author><summary type="html">Website configuration Move to the sites-available directory. $ cd /etc/nginx/sites-available Create a new site configuration file. $ sudo nano marcov4lente.com Add the following server configuration to the site config file, replacing the domain and direcotry names appropriately. Then save. server { listen 80 default_server; listen [::]:80 default_server; root /var/www/marcov4lente.com; index index.php index.html index.htm index.nginx-debian.html; server_name marcov4lente.com; # enable rewrite location / { try_files $uri $uri/ /index.php?q=$request_uri; } # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000 location ~ \.php$ { include snippets/fastcgi-php.conf; fastcgi_pass unix:/run/php/php7.0-fpm.sock; } # deny access to .htaccess files location ~ /\.ht { deny all; } Enable the website, by symlinking it’s configuration file to the sites-enabled folder: ls -s /etc/nginx/sites-available/marcov4lente.com /etc/nginx/sites-enabled/marcov4lente.com Confirm that the server’s configuration files contain no errors. $ sudo nginx -t Restart nginx-php $ sudo systemctl restart nginx Done If the configured domain name’s DNS is correctly configured, then NginX server should correctly handle incoming requests for the domain name configured.</summary></entry><entry><title type="html">Linux File and Folder Permissions</title><link href="https://marcov4lente.com/marcov4lente.com/_site//articles/linux-file-and-folder-permissions.html" rel="alternate" type="text/html" title="Linux File and Folder Permissions" /><published>2015-11-22T14:44:54+00:00</published><updated>2015-11-22T14:44:54+00:00</updated><id>https://marcov4lente.com/marcov4lente.com/_site//articles/linux-file-and-folder-permissions</id><content type="html" xml:base="https://marcov4lente.com/marcov4lente.com/_site//articles/linux-file-and-folder-permissions.html">&lt;p&gt;Change folder owner&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ chown you:yourgroup /home -R
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Recursively add read/write permissions to an owner’s or group’s folder&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ chmod -R ug+rw foldername
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;For the web root folder permissions, set group of folder to www-data.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo chgrp www-data /var/www
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Make it writable.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo chmod 775 /var/www
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Set group id for subfolders.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo chmod g+s /var/www
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Add username to the group&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo useradd -G www-data [USERNAME]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">Change folder owner $ chown you:yourgroup /home -R Recursively add read/write permissions to an owner’s or group’s folder $ chmod -R ug+rw foldername For the web root folder permissions, set group of folder to www-data. $ sudo chgrp www-data /var/www Make it writable. sudo chmod 775 /var/www Set group id for subfolders. sudo chmod g+s /var/www Add username to the group sudo useradd -G www-data [USERNAME]</summary></entry><entry><title type="html">Linux user management via the terminal</title><link href="https://marcov4lente.com/marcov4lente.com/_site//articles/linux-user-management-via-the-terminal.html" rel="alternate" type="text/html" title="Linux user management via the terminal" /><published>2015-10-12T10:04:54+00:00</published><updated>2015-10-12T10:04:54+00:00</updated><id>https://marcov4lente.com/marcov4lente.com/_site//articles/linux-user-management-via-the-terminal</id><content type="html" xml:base="https://marcov4lente.com/marcov4lente.com/_site//articles/linux-user-management-via-the-terminal.html">&lt;p&gt;&lt;strong&gt;Create new user&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ adduser username
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Add user to sudo group&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ usermod -aG sudo username
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Change password&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ passwd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">Create new user $ adduser username Add user to sudo group $ usermod -aG sudo username Change password $ passwd</summary></entry><entry><title type="html">Installing and setting up Gulp on an Ubuntu 16.04 Server</title><link href="https://marcov4lente.com/marcov4lente.com/_site//articles/installing-and-setting-up-Gulp-on-an-Ubuntu-16-04-xenial-server.html" rel="alternate" type="text/html" title="Installing and setting up Gulp on an Ubuntu 16.04 Server" /><published>2015-03-15T13:34:54+00:00</published><updated>2015-03-15T13:34:54+00:00</updated><id>https://marcov4lente.com/marcov4lente.com/_site//articles/installing-and-setting-up-Gulp-on-an-Ubuntu-16-04-xenial-server</id><content type="html" xml:base="https://marcov4lente.com/marcov4lente.com/_site//articles/installing-and-setting-up-Gulp-on-an-Ubuntu-16-04-xenial-server.html">&lt;p&gt;An outline of what the installation process consists of.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Installation&lt;/li&gt;
+  &lt;li&gt;Install Node packages on a Vagrant virtual machine&lt;/li&gt;
+  &lt;li&gt;Install Node packages on a Vagrant physical machine&lt;/li&gt;
+  &lt;li&gt;Initiate a Project&lt;/li&gt;
+  &lt;li&gt;Configuring the Gulp File&lt;/li&gt;
+  &lt;li&gt;Executing Gulp&lt;/li&gt;
+  &lt;li&gt;Troubleshooting&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+&lt;p&gt;Installing Node and NPM on Ubuntu Linux (if not already installed), using the Node maintained Ubuntu repositories.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ curl -sL https://deb.nodesource.com/setup | sudo bash -
+$ sudo apt-get install nodejs
+$ sudo apt-get install npm
+$ sudo ln -s /usr/bin/nodejs /usr/bin/node
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Installing Gulp.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo npm install --global gulp
+$ sudo npm install -g gulp-cli
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Install Node packages on a Vagrant virtual machine.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ npm install gulp --no-bin-links
+$ npm install gulp-util --no-bin-links
+$ npm install gulp-sass --no-bin-links
+$ npm install gulp-clean-css --no-bin-links
+$ npm install gulp-uglify --no-bin-links
+$ npm install obal gulp-concat --no-bin-links
+$ npm install gulp-connect --no-bin-links
+$ npm install gulp-sourcemaps --no-bin-links
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;This will create a node_modules directory in the project root.&lt;/p&gt;
+
+&lt;p&gt;Or, install Node packages on a physical machine&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ npm install gulp --g
+$ npm install gulp-util --g
+$ npm install gulp-sass --g
+$ npm install gulp-clean-css --g
+$ npm install gulp-uglify --g
+$ npm install obal gulp-concat --g
+$ npm install gulp-connect --g
+$ npm install gulp-sourcemaps --g
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;This will create a node_modules directory in the project root.&lt;/p&gt;
+
+&lt;h2 id=&quot;initiate-a-project&quot;&gt;Initiate a Project&lt;/h2&gt;
+&lt;p&gt;Create a package.json file in the root of the project.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;marcov4lente.com&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;version&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0.1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;description&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;marcov4lente.com&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;main&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;index.js&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;keywords&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Marco&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Valente&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Development&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;author&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Marco Valente&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;contributors&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Marco Valente &amp;lt;marcov4lente@gmail.com&amp;gt; (http://marcov4lente.com)&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;license&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;MIT&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Add the following package requirements to the package.json.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&quot;dependencies&quot;: {
+    &quot;gulp&quot;: &quot;latest&quot;,
+    &quot;gulp-util&quot;: &quot;latest&quot;,
+    &quot;gulp-sass&quot;: &quot;latest&quot;,
+    &quot;clean-css&quot;: &quot;latest&quot;,
+    &quot;gulp-uglify&quot;: &quot;latest&quot;,
+    &quot;gulp-concat&quot;: &quot;latest&quot;,
+    &quot;gulp-connect&quot;: &quot;latest&quot;,
+    &quot;gulp-sourcemaps&quot;: &quot;latest&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;gulp&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;npmjs.com definition:The streaming build system
+https://www.npmjs.com/package/gulp&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;gulp-util&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;npmjs.com definition: none.
+https://www.npmjs.com/package/gulp-util&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;gulp-sass&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;npmjs.com definition: Sass plugin for Gulp..
+https://www.npmjs.com/package/gulp-sass&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;coffee-gulp&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;npmjs.com definition: A tiny module which wraps Gulp to use CoffeeScript for your gulpfile.
+https://www.npmjs.com/package/coffee-gulp&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;gulp-uglify&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;npmjs.com definition: Minify files with UglifyJS.
+https://www.npmjs.com/package/gulp-uglify&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;gulp-concat&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;npmjs.com definition: Concatenates files.
+https://www.npmjs.com/package/gulp-concat&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;gulp-connect&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;npmjs.com definition: Gulp plugin to run a webserver (with LiveReload).
+https://www.npmjs.com/package/gulp-connect&lt;/p&gt;
+
+&lt;h2 id=&quot;ggulpfilejs&quot;&gt;Ggulpfile.js&lt;/h2&gt;
+&lt;p&gt;The Gulp File defines the Gulp tasks to be carried out. This resides in the root of the project. A sample Gulp File (based on https://www.npmjs.com/package/gulp) as follows:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var gulp = require('gulp');
+var sass = require('gulp-sass');
+var cleancss = require('gulp-clean-css');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var sourcemaps = require('gulp-sourcemaps');
+
+
+// compile scss to css
+gulp.task('styles', function() {
+    gulp.src('./assets/scss/*.scss')
+        .pipe(sass())
+        .pipe(concat('app.css'))
+        .pipe(cleancss({compatibility: 'ie8'}))
+        .pipe(gulp.dest('./public'))
+});
+
+// concatenate and minify javascript
+gulp.task('scripts', function() {
+    gulp.src('./assets/js/*.js')
+        .pipe(sourcemaps.init())
+        // .pipe(uglify())
+        .pipe(concat('app.js'))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('./public'));
+});
+
+
+// Rerun the task when a file changes
+gulp.task('watch', function() {
+    gulp.watch('assets/js', ['scripts']);
+    gulp.watch('assets/scss', ['compile-styles']);
+});
+
+
+// The default task (called when you run `gulp` from cli)
+gulp.task('default', ['watch', 'scripts', 'styles']);
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The above Gulp File configuration is based on that in the Gulp documentation https://www.npmjs.com/package/gulp&lt;/p&gt;
+
+&lt;h2 id=&quot;executing-gulp&quot;&gt;Executing Gulp&lt;/h2&gt;
+&lt;p&gt;This will launch a persistant instance of gulp, which will watch the defined folders for changes and publish them to the defined destination files.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ gulp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;troubleshooting&quot;&gt;Troubleshooting&lt;/h2&gt;
+&lt;p&gt;NPM error&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm ERR! File: /path/to/file
+npm ERR! Failed to parse package.json data.
+npm ERR! package.json must be actual JSON, not just JavaScript.
+npm ERR!
+npm ERR! This is not a bug in npm.
+npm ERR! Tell the package author to fix their package.json file. JSON.parse
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Solution: Correct the JSON syntax errors in package.json.&lt;/p&gt;
+
+&lt;p&gt;CLI error (Windows)&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;'gulp' is not recognized as an internal or external command,
+operable program or batch file.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Caused by missing environmental variables.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rem for future
+setx NODE_PATH %AppData%\npm\node_modules
+rem for current session
+set NODE_PATH=%AppData%\npm\node_modules
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">An outline of what the installation process consists of. Installation Install Node packages on a Vagrant virtual machine Install Node packages on a Vagrant physical machine Initiate a Project Configuring the Gulp File Executing Gulp Troubleshooting Installation Installing Node and NPM on Ubuntu Linux (if not already installed), using the Node maintained Ubuntu repositories. $ curl -sL https://deb.nodesource.com/setup | sudo bash - $ sudo apt-get install nodejs $ sudo apt-get install npm $ sudo ln -s /usr/bin/nodejs /usr/bin/node Installing Gulp. $ sudo npm install --global gulp $ sudo npm install -g gulp-cli Install Node packages on a Vagrant virtual machine. $ npm install gulp --no-bin-links $ npm install gulp-util --no-bin-links $ npm install gulp-sass --no-bin-links $ npm install gulp-clean-css --no-bin-links $ npm install gulp-uglify --no-bin-links $ npm install obal gulp-concat --no-bin-links $ npm install gulp-connect --no-bin-links $ npm install gulp-sourcemaps --no-bin-links This will create a node_modules directory in the project root. Or, install Node packages on a physical machine $ npm install gulp --g $ npm install gulp-util --g $ npm install gulp-sass --g $ npm install gulp-clean-css --g $ npm install gulp-uglify --g $ npm install obal gulp-concat --g $ npm install gulp-connect --g $ npm install gulp-sourcemaps --g This will create a node_modules directory in the project root. Initiate a Project Create a package.json file in the root of the project. { &quot;name&quot;: &quot;marcov4lente.com&quot;, &quot;version&quot;: &quot;0.1&quot;, &quot;description&quot;: &quot;marcov4lente.com&quot;, &quot;main&quot;: &quot;index.js&quot;, &quot;keywords&quot;: [ &quot;Marco&quot;, &quot;Valente&quot;, &quot;Development&quot; ], &quot;author&quot;: &quot;Marco Valente&quot;, &quot;contributors&quot;: [ &quot;Marco Valente &amp;lt;marcov4lente@gmail.com&amp;gt; (http://marcov4lente.com)&quot; ], &quot;license&quot;: &quot;MIT&quot; } Add the following package requirements to the package.json. &quot;dependencies&quot;: { &quot;gulp&quot;: &quot;latest&quot;, &quot;gulp-util&quot;: &quot;latest&quot;, &quot;gulp-sass&quot;: &quot;latest&quot;, &quot;clean-css&quot;: &quot;latest&quot;, &quot;gulp-uglify&quot;: &quot;latest&quot;, &quot;gulp-concat&quot;: &quot;latest&quot;, &quot;gulp-connect&quot;: &quot;latest&quot;, &quot;gulp-sourcemaps&quot;: &quot;latest&quot; } gulp npmjs.com definition:The streaming build system https://www.npmjs.com/package/gulp gulp-util npmjs.com definition: none. https://www.npmjs.com/package/gulp-util gulp-sass npmjs.com definition: Sass plugin for Gulp.. https://www.npmjs.com/package/gulp-sass coffee-gulp npmjs.com definition: A tiny module which wraps Gulp to use CoffeeScript for your gulpfile. https://www.npmjs.com/package/coffee-gulp gulp-uglify npmjs.com definition: Minify files with UglifyJS. https://www.npmjs.com/package/gulp-uglify gulp-concat npmjs.com definition: Concatenates files. https://www.npmjs.com/package/gulp-concat gulp-connect npmjs.com definition: Gulp plugin to run a webserver (with LiveReload). https://www.npmjs.com/package/gulp-connect Ggulpfile.js The Gulp File defines the Gulp tasks to be carried out. This resides in the root of the project. A sample Gulp File (based on https://www.npmjs.com/package/gulp) as follows: var gulp = require('gulp'); var sass = require('gulp-sass'); var cleancss = require('gulp-clean-css'); var concat = require('gulp-concat'); var uglify = require('gulp-uglify'); var sourcemaps = require('gulp-sourcemaps'); // compile scss to css gulp.task('styles', function() { gulp.src('./assets/scss/*.scss') .pipe(sass()) .pipe(concat('app.css')) .pipe(cleancss({compatibility: 'ie8'})) .pipe(gulp.dest('./public')) }); // concatenate and minify javascript gulp.task('scripts', function() { gulp.src('./assets/js/*.js') .pipe(sourcemaps.init()) // .pipe(uglify()) .pipe(concat('app.js')) .pipe(sourcemaps.write()) .pipe(gulp.dest('./public')); }); // Rerun the task when a file changes gulp.task('watch', function() { gulp.watch('assets/js', ['scripts']); gulp.watch('assets/scss', ['compile-styles']); }); // The default task (called when you run `gulp` from cli) gulp.task('default', ['watch', 'scripts', 'styles']); The above Gulp File configuration is based on that in the Gulp documentation https://www.npmjs.com/package/gulp Executing Gulp This will launch a persistant instance of gulp, which will watch the defined folders for changes and publish them to the defined destination files. $ gulp Troubleshooting NPM error npm ERR! File: /path/to/file npm ERR! Failed to parse package.json data. npm ERR! package.json must be actual JSON, not just JavaScript. npm ERR! npm ERR! This is not a bug in npm. npm ERR! Tell the package author to fix their package.json file. JSON.parse Solution: Correct the JSON syntax errors in package.json. CLI error (Windows) 'gulp' is not recognized as an internal or external command, operable program or batch file. Caused by missing environmental variables. rem for future setx NODE_PATH %AppData%\npm\node_modules rem for current session set NODE_PATH=%AppData%\npm\node_modules</summary></entry><entry><title type="html">PHP code style fixer</title><link href="https://marcov4lente.com/marcov4lente.com/_site//articles/php-code-style-fixer.html" rel="alternate" type="text/html" title="PHP code style fixer" /><published>2015-01-12T22:34:54+00:00</published><updated>2015-01-12T22:34:54+00:00</updated><id>https://marcov4lente.com/marcov4lente.com/_site//articles/php-code-style-fixer</id><content type="html" xml:base="https://marcov4lente.com/marcov4lente.com/_site//articles/php-code-style-fixer.html">&lt;p&gt;I recently stumbed upon a marvelous tool, licensed with the MIT license by Sensio Labs, called PHP Coding Standard Fixer. It automatically analyses an application’s PHP source code and corrects the coding format by applying PSR-0, PSR-1 and PSR-2 standards.&lt;/p&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;Download the file to the global binary folder.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo wget http://get.sensiolabs.org/php-cs-fixer.phar -O /usr/local/bin/php-cs-fixer
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If at this stage the terminal returns a message similar to “wget: command not found”, it means that wget is not installed. The following command will install wget.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install wget
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Make it executable.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;chmod +x /usr/local/bin/php-cs-fixer
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;usage&quot;&gt;Usage&lt;/h2&gt;
+
+&lt;p&gt;Before making any changes one may opt to have the utility perform a dry run, where it scan the files of the application and outputs the proposed changes for analysis.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ php-cs-fixer fix /application/folder --dry-run --verbose --diff
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If the proposed changes are satisfactory, we may proceed to apply the proposed fixes .&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ php-cs-fixer fix /application/folder
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;By defualt, this utility applies PSR-0, PSR-1 and PSR-2 coding standards simultenously. If required, this behavour can be altered to have it apply only certain PSR coding standards to the source code.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ php-cs-fixer fix /application/folder --level=psr1
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Legacy applications are often a painful reminder of the perils of not paying attention to good stadards and practices. While this isnt a complete dirty-code antidote, it is a small step in the right direction of reducing the technical debt of older applications. There are quite a few advanced options that this utility supports, please refer to the &lt;a href=&quot;http://cs.sensiolabs.org&quot;&gt;official project homepage&lt;/a&gt; for more information.&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;http://cs.sensiolabs.org/&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">I recently stumbed upon a marvelous tool, licensed with the MIT license by Sensio Labs, called PHP Coding Standard Fixer. It automatically analyses an application’s PHP source code and corrects the coding format by applying PSR-0, PSR-1 and PSR-2 standards. Installation Download the file to the global binary folder. $ sudo wget http://get.sensiolabs.org/php-cs-fixer.phar -O /usr/local/bin/php-cs-fixer If at this stage the terminal returns a message similar to “wget: command not found”, it means that wget is not installed. The following command will install wget. $ sudo apt-get install wget Make it executable. chmod +x /usr/local/bin/php-cs-fixer Usage Before making any changes one may opt to have the utility perform a dry run, where it scan the files of the application and outputs the proposed changes for analysis. $ php-cs-fixer fix /application/folder --dry-run --verbose --diff If the proposed changes are satisfactory, we may proceed to apply the proposed fixes . $ php-cs-fixer fix /application/folder By defualt, this utility applies PSR-0, PSR-1 and PSR-2 coding standards simultenously. If required, this behavour can be altered to have it apply only certain PSR coding standards to the source code. $ php-cs-fixer fix /application/folder --level=psr1 Conclusion Legacy applications are often a painful reminder of the perils of not paying attention to good stadards and practices. While this isnt a complete dirty-code antidote, it is a small step in the right direction of reducing the technical debt of older applications. There are quite a few advanced options that this utility supports, please refer to the official project homepage for more information. References http://cs.sensiolabs.org/</summary></entry><entry><title type="html">Markdown Formatting Cheatsheet Refrence</title><link href="https://marcov4lente.com/marcov4lente.com/_site//articles/markdown-formatting-cheatsheet-refrence/" rel="alternate" type="text/html" title="Markdown Formatting Cheatsheet Refrence" /><published>2014-07-02T00:00:00+00:00</published><updated>2014-07-02T00:00:00+00:00</updated><id>https://marcov4lente.com/marcov4lente.com/_site//articles/markdown-formatting-cheatsheet-refrence</id><content type="html" xml:base="https://marcov4lente.com/marcov4lente.com/_site//articles/markdown-formatting-cheatsheet-refrence/">&lt;hr /&gt;
+&lt;p&gt;layout: article
+title: Markdown formatting
+date: 2014-07-02 10:06:54 +0000
+description: Formattinf content with markdown.
+categories: Linux
+permalink: articles/markdown-formatting-cheatsheet-reference.html
+—&lt;/p&gt;
+
+&lt;h2 id=&quot;headers&quot;&gt;Headers&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# H1 Heading
+## H2 Heading
+### H3 Heading
+#### H4 Heading
+##### H5 Heading
+###### H6 Heading
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;h1-heading&quot;&gt;H1 Heading&lt;/h1&gt;
+&lt;h2 id=&quot;h2-heading&quot;&gt;H2 Heading&lt;/h2&gt;
+&lt;h3 id=&quot;h3-heading&quot;&gt;H3 Heading&lt;/h3&gt;
+&lt;h4 id=&quot;h4-heading&quot;&gt;H4 Heading&lt;/h4&gt;
+&lt;h5 id=&quot;h5-heading&quot;&gt;H5 Heading&lt;/h5&gt;
+&lt;h6 id=&quot;h6-heading&quot;&gt;H6 Heading&lt;/h6&gt;
+
+&lt;h2 id=&quot;text-decoration&quot;&gt;Text decoration&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;__This is bold text__
+**This is bold text**
+
+_This is italic text_
+*This is italic text*
+
+~~This is strike through text~~
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;This is bold text&lt;/strong&gt;
+&lt;strong&gt;This is bold text&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;This is italic text&lt;/em&gt;
+&lt;em&gt;This is italic text&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;del&gt;This is strike through text&lt;/del&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;horizontal-rules&quot;&gt;Horizontal rules&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
+***
+___
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;hr /&gt;
+&lt;hr /&gt;
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;lists&quot;&gt;Lists&lt;/h2&gt;
+&lt;p&gt;**Unordered lists## The environment&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- List item 1
+- List item 2
+- List item 3
+
+
++ List item 1
++ List item 2
++ List item 3
+
+
+* List item 1
+* List item 2
+* List item 3
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;List item 1&lt;/li&gt;
+  &lt;li&gt;List item 2&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;List item 3&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;List item 1&lt;/li&gt;
+  &lt;li&gt;List item 2&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;List item 3&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;List item 1&lt;/li&gt;
+  &lt;li&gt;List item 2&lt;/li&gt;
+  &lt;li&gt;List item 3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Ordered lists&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1. List item 1
+2. List item 2
+3. List item 3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;List item 1&lt;/li&gt;
+  &lt;li&gt;List item 2&lt;/li&gt;
+  &lt;li&gt;List item 3&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Paragraph lists&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+2. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+
+    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
+
+    Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+3. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.
+
+    Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&lt;/p&gt;
+
+    &lt;p&gt;Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.&lt;/p&gt;
+
+    &lt;p&gt;Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?&lt;/p&gt;
+
+    &lt;p&gt;Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.&lt;/p&gt;
+
+    &lt;p&gt;Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;code-blocks&quot;&gt;Code blocks&lt;/h2&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;There.is(code)-&amp;gt;in(here)&lt;/p&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;There.is(code)-&amp;gt;in(here)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;tables&quot;&gt;Tables&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+| Name | Colour | Price |
+|------|--------|-------|
+| VW Golf | Silver | € 15 0000 |
+| BMW M3 | Silver | € 30 0000 |
+| Audi A4 | White | € 25 0000 |
+| Audi TT | Black | € 45 0000 |
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Colour&lt;/th&gt;
+      &lt;th&gt;Price&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;VW Golf&lt;/td&gt;
+      &lt;td&gt;Silver&lt;/td&gt;
+      &lt;td&gt;€ 15 0000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;BMW M3&lt;/td&gt;
+      &lt;td&gt;Silver&lt;/td&gt;
+      &lt;td&gt;€ 30 0000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Audi A4&lt;/td&gt;
+      &lt;td&gt;White&lt;/td&gt;
+      &lt;td&gt;€ 25 0000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Audi TT&lt;/td&gt;
+      &lt;td&gt;Black&lt;/td&gt;
+      &lt;td&gt;€ 45 0000&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;table-cell-alignment&quot;&gt;Table cell alignment&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+| Name | Colour | Price |
+|:---  |  :---: |   ---:|
+| VW Golf | Silver | € 15 0000 |
+| BMW M3 | Silver | € 30 0000 |
+| Audi A4 | White | € 25 0000 |
+| Audi TT | Black | € 45 0000 |
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Name&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Colour&lt;/th&gt;
+      &lt;th style=&quot;text-align: right&quot;&gt;Price&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;VW Golf&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Silver&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;€ 15 0000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;BMW M3&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Silver&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;€ 30 0000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Audi A4&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;White&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;€ 25 0000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Audi TT&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Black&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;€ 45 0000&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;hyperlinks&quot;&gt;Hyperlinks&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[Google Search](https://www.google.com)
+[MarcoV4lente](https://MarcoV4lente.com)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.google.com&quot;&gt;Google Search&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://MarcoV4lente.com&quot;&gt;MarcoV4lente&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">layout: article title: Markdown formatting date: 2014-07-02 10:06:54 +0000 description: Formattinf content with markdown. categories: Linux permalink: articles/markdown-formatting-cheatsheet-reference.html — Headers # H1 Heading ## H2 Heading ### H3 Heading #### H4 Heading ##### H5 Heading ###### H6 Heading H1 Heading H2 Heading H3 Heading H4 Heading H5 Heading H6 Heading Text decoration __This is bold text__ **This is bold text** _This is italic text_ *This is italic text* ~~This is strike through text~~ This is bold text This is bold text This is italic text This is italic text This is strike through text Horizontal rules --- *** ___ Lists **Unordered lists## The environment - List item 1 - List item 2 - List item 3 + List item 1 + List item 2 + List item 3 * List item 1 * List item 2 * List item 3 List item 1 List item 2 List item 3 List item 1 List item 2 List item 3 List item 1 List item 2 List item 3 Ordered lists 1. List item 1 2. List item 2 3. List item 3 List item 1 List item 2 List item 3 Paragraph lists 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. 2. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? 3. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Code blocks ``` There.is(code)-&amp;gt;in(here) ``` There.is(code)-&amp;gt;in(here) Tables | Name | Colour | Price | |------|--------|-------| | VW Golf | Silver | € 15 0000 | | BMW M3 | Silver | € 30 0000 | | Audi A4 | White | € 25 0000 | | Audi TT | Black | € 45 0000 | Name Colour Price VW Golf Silver € 15 0000 BMW M3 Silver € 30 0000 Audi A4 White € 25 0000 Audi TT Black € 45 0000 Table cell alignment | Name | Colour | Price | |:--- | :---: | ---:| | VW Golf | Silver | € 15 0000 | | BMW M3 | Silver | € 30 0000 | | Audi A4 | White | € 25 0000 | | Audi TT | Black | € 45 0000 | Name Colour Price VW Golf Silver € 15 0000 BMW M3 Silver € 30 0000 Audi A4 White € 25 0000 Audi TT Black € 45 0000 Hyperlinks [Google Search](https://www.google.com) [MarcoV4lente](https://MarcoV4lente.com) Google Search MarcoV4lente</summary></entry></feed>

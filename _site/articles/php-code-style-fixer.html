@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>PHP code style fixer | MarcoV4lente - Web Application Developer</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="msapplication-tap-highlight" content="no">
+<link rel="icon" href="/marcov4lente.com/_site//img/favicon.png" sizes="32x32">
+<link type="text/css" rel="stylesheet" href="/marcov4lente.com/_site//app.css"  media="screen,projection"/>
+<script src="/marcov4lente.com/_site//app.js"></script>
+
+    </head>
+    <body>
+        <nav class="white blue-grey-text text-darken-2">
+    <div class="container">
+        <div class="nav-wrapper">
+            <a href="/marcov4lente.com/_site//" class="brand-logo">
+                <img src="/marcov4lente.com/_site//img/marcov4lente-logo.png" alt="MarcoV4lente">
+            </a>
+            <ul id="nav-mobile" class="right hide-on-small-only">
+                <li>
+                    <a href="/marcov4lente.com/_site/" class="cyan-text text-darken-2"><i class="fa fa-home" aria-hidden="true"></i></i> Home</a>
+                </li>
+                <li>
+                    <a href="/marcov4lente.com/_site//articles" class="cyan-text text-darken-2"><i class="fa fa-file-text" aria-hidden="true"></i> Articles</a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/marcov4lente" class="cyan-text text-darken-2" target="blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i> Linked In</a>
+                </li>
+                <li>
+                    <a href="https://github.com/marcov4lente" class="cyan-text text-darken-2" target="blank"><i class="fa fa-github-square" aria-hidden="true"></i> GitHub</a>
+                </li>
+                <li>
+                    <a href="https://instagram.com/marcov4lente" class="cyan-text text-darken-2" target="blank"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+        <div class="row hero">
+    <div class="container">
+        <div class="col s12">
+           <h1 class="white-text">PHP code style fixer</h1>
+        </div>
+    </div>
+</div>
+
+        <div class="row hide-on-med-and-up blue-grey lighten-5">
+    <div class="col s3 center-align">
+        <div class="section white-text">
+            <a href="/marcov4lente.com/_site//articles"  class="cyan-text text-darken-2"><h2><i class="fa fa-file-text" aria-hidden="true"></i></h2></a>
+        </div>
+    </div>
+    <div class="col s3 center-align">
+        <div class="section white-text">
+            <a href="https://www.linkedin.com/in/marcov4lente" class="cyan-text text-darken-2" target="blank"><h2><i class="fa fa-linkedin-square" aria-hidden="true"></i></h2></a>
+        </div>
+    </div>
+    <div class="col s3 center-align">
+        <div class="section white-text">
+            <a href="https://github.com/marcov4lente" class="cyan-text text-darken-2" target="blank"><h2><i class="fa fa-github-square" aria-hidden="true"></i></h2></a>
+        </div>
+    </div>
+    <div class="col s3 center-align">
+        <div class="section white-text">
+            <a href="https://instagram.com/marcov4lente" class="cyan-text text-darken-2" target="blank"><h2><i class="fa fa-instagram" aria-hidden="true"></i></h2></a>
+        </div>
+    </div>
+</div>
+
+        <div class="row">
+            <div class="container">
+                <div class="col s12 m12">
+                    <div class="section">
+                        <p>I recently stumbed upon a marvelous tool, licensed with the MIT license by Sensio Labs, called PHP Coding Standard Fixer. It automatically analyses an application’s PHP source code and corrects the coding format by applying PSR-0, PSR-1 and PSR-2 standards.</p>
+
+<h2 id="installation">Installation</h2>
+
+<p>Download the file to the global binary folder.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo wget http://get.sensiolabs.org/php-cs-fixer.phar -O /usr/local/bin/php-cs-fixer
+
+</code></pre>
+</div>
+
+<p>If at this stage the terminal returns a message similar to “wget: command not found”, it means that wget is not installed. The following command will install wget.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo apt-get install wget
+</code></pre>
+</div>
+
+<p>Make it executable.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>chmod +x /usr/local/bin/php-cs-fixer
+
+</code></pre>
+</div>
+
+<h2 id="usage">Usage</h2>
+
+<p>Before making any changes one may opt to have the utility perform a dry run, where it scan the files of the application and outputs the proposed changes for analysis.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ php-cs-fixer fix /application/folder --dry-run --verbose --diff
+</code></pre>
+</div>
+
+<p>If the proposed changes are satisfactory, we may proceed to apply the proposed fixes .</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ php-cs-fixer fix /application/folder
+</code></pre>
+</div>
+
+<p>By defualt, this utility applies PSR-0, PSR-1 and PSR-2 coding standards simultenously. If required, this behavour can be altered to have it apply only certain PSR coding standards to the source code.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ php-cs-fixer fix /application/folder --level=psr1
+
+</code></pre>
+</div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Legacy applications are often a painful reminder of the perils of not paying attention to good stadards and practices. While this isnt a complete dirty-code antidote, it is a small step in the right direction of reducing the technical debt of older applications. There are quite a few advanced options that this utility supports, please refer to the <a href="http://cs.sensiolabs.org">official project homepage</a> for more information.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>http://cs.sensiolabs.org/</li>
+</ul>
+
+                    </div>
+                    <hr>
+                    <div class="section">
+                        Published on: 12 January 2015
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="blue-grey lighten-5">
+    <div class="row">
+        <div class="container">
+            <div class="col s12 m3">
+                <ul>
+                    <li>Source code hosted on <a href="http://github.com/marcov4lente/marcov4lente" target="blank">GitHub</a></li>
+                    <li>Powered by <a href="https://jekyllrb.com/" target="blank">Jekyll</a></li>
+                    <li>Hosted on <a href="https://www.ubuntu.com/" target="blank">Ubuntu Server</a></li>
+                    <li>Human detector by <a href="http://keith-wood.name/realPerson.html" target="blank">Keith Wood</a></li>
+                </ul>
+            </div>
+            <div class="col s12 m3">
+                <ul>
+                    <li>© 2017 Copyright MarcoV4lente.</li>
+                    <li>Property of Marco Valente.</li>
+                    <li>All rights reserved.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+        <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-56222217-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+    </body>
+</html>

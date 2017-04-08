@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Installing and setting up Gulp on an Ubuntu 16.04 Server | MarcoV4lente - Web Application Developer</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="msapplication-tap-highlight" content="no">
+<link rel="icon" href="/marcov4lente.com/_site//img/favicon.png" sizes="32x32">
+<link type="text/css" rel="stylesheet" href="/marcov4lente.com/_site//app.css"  media="screen,projection"/>
+<script src="/marcov4lente.com/_site//app.js"></script>
+
+    </head>
+    <body>
+        <nav class="white blue-grey-text text-darken-2">
+    <div class="container">
+        <div class="nav-wrapper">
+            <a href="/marcov4lente.com/_site//" class="brand-logo">
+                <img src="/marcov4lente.com/_site//img/marcov4lente-logo.png" alt="MarcoV4lente">
+            </a>
+            <ul id="nav-mobile" class="right hide-on-small-only">
+                <li>
+                    <a href="/marcov4lente.com/_site/" class="cyan-text text-darken-2"><i class="fa fa-home" aria-hidden="true"></i></i> Home</a>
+                </li>
+                <li>
+                    <a href="/marcov4lente.com/_site//articles" class="cyan-text text-darken-2"><i class="fa fa-file-text" aria-hidden="true"></i> Articles</a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/marcov4lente" class="cyan-text text-darken-2" target="blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i> Linked In</a>
+                </li>
+                <li>
+                    <a href="https://github.com/marcov4lente" class="cyan-text text-darken-2" target="blank"><i class="fa fa-github-square" aria-hidden="true"></i> GitHub</a>
+                </li>
+                <li>
+                    <a href="https://instagram.com/marcov4lente" class="cyan-text text-darken-2" target="blank"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+        <div class="row hero">
+    <div class="container">
+        <div class="col s12">
+           <h1 class="white-text">Installing and setting up Gulp on an Ubuntu 16.04 Server</h1>
+        </div>
+    </div>
+</div>
+
+        <div class="row hide-on-med-and-up blue-grey lighten-5">
+    <div class="col s3 center-align">
+        <div class="section white-text">
+            <a href="/marcov4lente.com/_site//articles"  class="cyan-text text-darken-2"><h2><i class="fa fa-file-text" aria-hidden="true"></i></h2></a>
+        </div>
+    </div>
+    <div class="col s3 center-align">
+        <div class="section white-text">
+            <a href="https://www.linkedin.com/in/marcov4lente" class="cyan-text text-darken-2" target="blank"><h2><i class="fa fa-linkedin-square" aria-hidden="true"></i></h2></a>
+        </div>
+    </div>
+    <div class="col s3 center-align">
+        <div class="section white-text">
+            <a href="https://github.com/marcov4lente" class="cyan-text text-darken-2" target="blank"><h2><i class="fa fa-github-square" aria-hidden="true"></i></h2></a>
+        </div>
+    </div>
+    <div class="col s3 center-align">
+        <div class="section white-text">
+            <a href="https://instagram.com/marcov4lente" class="cyan-text text-darken-2" target="blank"><h2><i class="fa fa-instagram" aria-hidden="true"></i></h2></a>
+        </div>
+    </div>
+</div>
+
+        <div class="row">
+            <div class="container">
+                <div class="col s12 m12">
+                    <div class="section">
+                        <p>An outline of what the installation process consists of.</p>
+<ul>
+  <li>Installation</li>
+  <li>Install Node packages on a Vagrant virtual machine</li>
+  <li>Install Node packages on a Vagrant physical machine</li>
+  <li>Initiate a Project</li>
+  <li>Configuring the Gulp File</li>
+  <li>Executing Gulp</li>
+  <li>Troubleshooting</li>
+</ul>
+
+<h2 id="installation">Installation</h2>
+<p>Installing Node and NPM on Ubuntu Linux (if not already installed), using the Node maintained Ubuntu repositories.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ curl -sL https://deb.nodesource.com/setup | sudo bash -
+$ sudo apt-get install nodejs
+$ sudo apt-get install npm
+$ sudo ln -s /usr/bin/nodejs /usr/bin/node
+
+</code></pre>
+</div>
+
+<p>Installing Gulp.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo npm install --global gulp
+$ sudo npm install -g gulp-cli
+</code></pre>
+</div>
+
+<p>Install Node packages on a Vagrant virtual machine.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ npm install gulp --no-bin-links
+$ npm install gulp-util --no-bin-links
+$ npm install gulp-sass --no-bin-links
+$ npm install gulp-clean-css --no-bin-links
+$ npm install gulp-uglify --no-bin-links
+$ npm install obal gulp-concat --no-bin-links
+$ npm install gulp-connect --no-bin-links
+$ npm install gulp-sourcemaps --no-bin-links
+</code></pre>
+</div>
+<p>This will create a node_modules directory in the project root.</p>
+
+<p>Or, install Node packages on a physical machine</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ npm install gulp --g
+$ npm install gulp-util --g
+$ npm install gulp-sass --g
+$ npm install gulp-clean-css --g
+$ npm install gulp-uglify --g
+$ npm install obal gulp-concat --g
+$ npm install gulp-connect --g
+$ npm install gulp-sourcemaps --g
+</code></pre>
+</div>
+<p>This will create a node_modules directory in the project root.</p>
+
+<h2 id="initiate-a-project">Initiate a Project</h2>
+<p>Create a package.json file in the root of the project.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"marcov4lente.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"marcov4lente.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"main"</span><span class="p">:</span><span class="w"> </span><span class="s2">"index.js"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"keywords"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"Marco"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Valente"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Development"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"author"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Marco Valente"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"contributors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"Marco Valente &lt;marcov4lente@gmail.com&gt; (http://marcov4lente.com)"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"license"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MIT"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Add the following package requirements to the package.json.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>"dependencies": {
+    "gulp": "latest",
+    "gulp-util": "latest",
+    "gulp-sass": "latest",
+    "clean-css": "latest",
+    "gulp-uglify": "latest",
+    "gulp-concat": "latest",
+    "gulp-connect": "latest",
+    "gulp-sourcemaps": "latest"
+}
+</code></pre>
+</div>
+<p><strong>gulp</strong></p>
+
+<p>npmjs.com definition:The streaming build system
+https://www.npmjs.com/package/gulp</p>
+
+<p><strong>gulp-util</strong></p>
+
+<p>npmjs.com definition: none.
+https://www.npmjs.com/package/gulp-util</p>
+
+<p><strong>gulp-sass</strong></p>
+
+<p>npmjs.com definition: Sass plugin for Gulp..
+https://www.npmjs.com/package/gulp-sass</p>
+
+<p><strong>coffee-gulp</strong></p>
+
+<p>npmjs.com definition: A tiny module which wraps Gulp to use CoffeeScript for your gulpfile.
+https://www.npmjs.com/package/coffee-gulp</p>
+
+<p><strong>gulp-uglify</strong></p>
+
+<p>npmjs.com definition: Minify files with UglifyJS.
+https://www.npmjs.com/package/gulp-uglify</p>
+
+<p><strong>gulp-concat</strong></p>
+
+<p>npmjs.com definition: Concatenates files.
+https://www.npmjs.com/package/gulp-concat</p>
+
+<p><strong>gulp-connect</strong></p>
+
+<p>npmjs.com definition: Gulp plugin to run a webserver (with LiveReload).
+https://www.npmjs.com/package/gulp-connect</p>
+
+<h2 id="ggulpfilejs">Ggulpfile.js</h2>
+<p>The Gulp File defines the Gulp tasks to be carried out. This resides in the root of the project. A sample Gulp File (based on https://www.npmjs.com/package/gulp) as follows:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>var gulp = require('gulp');
+var sass = require('gulp-sass');
+var cleancss = require('gulp-clean-css');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var sourcemaps = require('gulp-sourcemaps');
+
+
+// compile scss to css
+gulp.task('styles', function() {
+    gulp.src('./assets/scss/*.scss')
+        .pipe(sass())
+        .pipe(concat('app.css'))
+        .pipe(cleancss({compatibility: 'ie8'}))
+        .pipe(gulp.dest('./public'))
+});
+
+// concatenate and minify javascript
+gulp.task('scripts', function() {
+    gulp.src('./assets/js/*.js')
+        .pipe(sourcemaps.init())
+        // .pipe(uglify())
+        .pipe(concat('app.js'))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('./public'));
+});
+
+
+// Rerun the task when a file changes
+gulp.task('watch', function() {
+    gulp.watch('assets/js', ['scripts']);
+    gulp.watch('assets/scss', ['compile-styles']);
+});
+
+
+// The default task (called when you run `gulp` from cli)
+gulp.task('default', ['watch', 'scripts', 'styles']);
+
+
+</code></pre>
+</div>
+
+<p>The above Gulp File configuration is based on that in the Gulp documentation https://www.npmjs.com/package/gulp</p>
+
+<h2 id="executing-gulp">Executing Gulp</h2>
+<p>This will launch a persistant instance of gulp, which will watch the defined folders for changes and publish them to the defined destination files.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ gulp
+</code></pre>
+</div>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>NPM error</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>npm ERR! File: /path/to/file
+npm ERR! Failed to parse package.json data.
+npm ERR! package.json must be actual JSON, not just JavaScript.
+npm ERR!
+npm ERR! This is not a bug in npm.
+npm ERR! Tell the package author to fix their package.json file. JSON.parse
+</code></pre>
+</div>
+
+<p>Solution: Correct the JSON syntax errors in package.json.</p>
+
+<p>CLI error (Windows)</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>'gulp' is not recognized as an internal or external command,
+operable program or batch file.
+</code></pre>
+</div>
+
+<p>Caused by missing environmental variables.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>rem for future
+setx NODE_PATH %AppData%\npm\node_modules
+rem for current session
+set NODE_PATH=%AppData%\npm\node_modules
+</code></pre>
+</div>
+
+                    </div>
+                    <hr>
+                    <div class="section">
+                        Published on: 15 March 2015
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="blue-grey lighten-5">
+    <div class="row">
+        <div class="container">
+            <div class="col s12 m3">
+                <ul>
+                    <li>Source code hosted on <a href="http://github.com/marcov4lente/marcov4lente" target="blank">GitHub</a></li>
+                    <li>Powered by <a href="https://jekyllrb.com/" target="blank">Jekyll</a></li>
+                    <li>Hosted on <a href="https://www.ubuntu.com/" target="blank">Ubuntu Server</a></li>
+                    <li>Human detector by <a href="http://keith-wood.name/realPerson.html" target="blank">Keith Wood</a></li>
+                </ul>
+            </div>
+            <div class="col s12 m3">
+                <ul>
+                    <li>© 2017 Copyright MarcoV4lente.</li>
+                    <li>Property of Marco Valente.</li>
+                    <li>All rights reserved.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+        <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-56222217-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+    </body>
+</html>
