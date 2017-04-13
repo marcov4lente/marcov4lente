@@ -1,7 +1,7 @@
 ---
 layout: article
-title:  "Sending mail PDF attachments in laravel 4"
-date:   2014-08-10 22:34:54 +0000
+title: Sending mail PDF attachments in laravel 4
+date: 2014-08-10 19:34:54 +0000
 description: Swift Mailer, Laravel's built in mail library, makes sending and queuing email quite painless. PDF creation however is not supported out of the box by Laravel, and requires a third party package called barryvdh/laraveldompdf. The barryvdh/laraveldompdf package is essentially a wrapper for the DOMPDF utility which is a useful HTML to PDF converter.
 categories: PHP
 permalink: articles/sending-mail-pdf-attachments-laravel-4.html
@@ -100,11 +100,11 @@ In more complex implementations, Laravel's built in Blade template engine can be
 **The Blade template**
 
 ```
-    <meta charset="utf-8">
+<meta charset="utf-8">
 
-# {{ $data['documentHeading'] }}
+\# {{ $data['documentHeading'] }}
 
- {{ $data['documentContent'] }}
+{{ $data['documentContent'] }}
 
 ```
 
@@ -190,13 +190,11 @@ unlink(/pre>filePath.$fileName);```
 **The PDF Blade template ("pdf_document_template")**
 
 ```
+<meta charset="utf-8">
 
+\# {{ $data['documentHeading'] }}
 
-    <meta charset="utf-8">
-
-# {{ $data['documentHeading'] }}
-
- {{ $data['documentContent'] }}
+{{ $data['documentContent'] }}
 
 ```
 
@@ -210,14 +208,17 @@ unlink(/pre>filePath.$fileName);```
 $data['documentHeading'] = 'This is a PDF file';
 $data['documentContent'] = 'I hope that you find it valuable!';
 $htmlContent = View::make('pdf_document_template')->with('data',$data);
+
 // pdf file params
 $fileName = $fileName;
 $filePath = '../app/storage/';
+
 // generate the pdf file
 PDF::loadHTML($htmlContent)
-->setPaper('a4')
-->setOrientation('portrait')
-->save(/pre>filePath.$fileName);
+    ->setPaper('a4')
+    ->setOrientation('portrait')
+    ->save(/pre>filePath.$fileName);
+
 // mail template
 $maiTemplate ='email_template';
 $data['recipientName'] = 'Jean Luc Picard';
@@ -233,12 +234,11 @@ $mailAttachment = $filePath.$fileName;
 
 // send the mail
 \Mail::send(
-$maiTemplate, $data,
-function($mailMessage) use ($mailRecipients, $mailSubject, $mailAttachment)
-{
-$message->to($mailRecipients)->subject($mailSubject);
-$message->attach($mailAttachment);
-}
+    $maiTemplate, $data,
+    function($mailMessage) use ($mailRecipients, $mailSubject, $mailAttachment) {
+        $message->to($mailRecipients)->subject($mailSubject);
+        $message->attach($mailAttachment);
+    }
 );
 
 // file cleanup
@@ -249,6 +249,7 @@ unlink(/pre>filePath.$fileName);
 ### Conclusion
 
 Mail management is generally quite simple in Laravel, thanks to the bundled Swift Mailer library. The same process above may be similarly replicated to deliver other types of attachments to, such as CSVs or image files.
+
 
 ### References
 
