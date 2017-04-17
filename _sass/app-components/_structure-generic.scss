@@ -29,8 +29,6 @@ footer {
     padding: 10px 0 40px 0;
 }
 
-/**########################################**/
-
 .hero {
     background: linear-gradient(141deg, #0097a7  0%, #0277bd  100%);
     margin-bottom: 0px !important;
@@ -45,6 +43,11 @@ footer {
     max-width:100px;
 }
 
+.hero-main h1 {
+    padding-top: 0px !important;
+    margin-top: 0px !important;
+}
+
 pre {
     padding:10px;
     background-color: #ECEFF1;
@@ -54,4 +57,9 @@ pre {
 
 code {
 
+}
+
+.article-list-item {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #cfd8dc;
 }

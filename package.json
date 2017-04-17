@@ -1,7 +1,7 @@
 {
-    "name": "marcov4lente.com",
+    "name": "MarcoValente.com",
     "version": "0.1",
-    "description": "marcov4lente.com",
+    "description": "MarcoValente.com",
     "license": "MIT",
     "keywords": [
     "Marco",
@@ -10,7 +10,7 @@
     ],
     "author": "Marco Valente",
     "contributors": [
-    "Marco Valente <marcov4lente@gmail.com> (http://marcov4lente.com)"
+    "Marco Valente <MarcoValente@gmail.com> (http://MarcoValente.com)"
     ],
     "dependencies": {
         "gulp": "latest",

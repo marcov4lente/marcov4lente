@@ -18,7 +18,7 @@ $ sudo apt-get install certbot
 ## Install the SSL certificate
 Using the Webroot option, specifiy the server root and domain name of the website.
 ```
-$ sudo certbot certonly --webroot -w /var/www/marcov4lente.com/ -d marcov4lente.com
+$ sudo certbot certonly --webroot -w /var/www/MarcoValente.com/ -d MarcoValente.com
 ```
 
 Remember to respond to the interactive command prompts to complete the installation.
@@ -49,8 +49,8 @@ Inside the main server block, configure the SSH certificate as follows:
     listen 443 ssl;
     listen [::]:443;
 
-    ssl_certificate /etc/letsencrypt/live/marcov4lente.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/marcov4lente.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/MarcoValente.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/MarcoValente.com/privkey.pem;
 ```
 
 Outside the main server block aAdd an additional server block to redirect HTTP traffic to HTTPS.

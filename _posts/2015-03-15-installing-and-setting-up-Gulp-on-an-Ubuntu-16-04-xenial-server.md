@@ -63,9 +63,9 @@ $ sudo npm install -g gulp-sourcemaps
 Create a package.json file in the root of the project.
 ```
 {
-  "name": "marcov4lente.com",
+  "name": "marcovalente.io",
   "version": "0.1",
-  "description": "marcov4lente.com",
+  "description": "marcovalente.io",
   "main": "index.js",
   "keywords": [
     "Marco",
@@ -74,7 +74,7 @@ Create a package.json file in the root of the project.
   ],
   "author": "Marco Valente",
   "contributors": [
-    "Marco Valente <marcov4lente@gmail.com> (http://marcov4lente.com)"
+    "Marco Valente <MarcoValente@gmail.com> (http://marcovalente.io)"
   ],
   "license": "MIT"
 }

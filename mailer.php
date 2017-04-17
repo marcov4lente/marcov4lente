@@ -58,10 +58,10 @@ class Mailer
         $mail->SMTPAuth = true;
         $mail->Username = $mailerConfig['gmailUsername'];
         $mail->Password = $mailerConfig['gmailPassword'];
-        $mail->setFrom('marcov4lente@gmail.com', 'MarcoV4lente.com');
+        $mail->setFrom('MarcoValente@gmail.com', 'MarcoValente.com');
         $mail->addReplyTo($_POST['email'], $_POST['name']);
-        $mail->addAddress('marcov4lente@gmail.com', 'Marco Valente');
-        $mail->Subject = 'MarcoV4lente.com contact form submission';
+        $mail->addAddress('MarcoValente@gmail.com', 'Marco Valente');
+        $mail->Subject = 'MarcoValente.com contact form submission';
 
         $message = '
         <strong>Name:</strong> '.$_POST['name'].'<br>
