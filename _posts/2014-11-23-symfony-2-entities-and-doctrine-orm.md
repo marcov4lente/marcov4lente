@@ -10,7 +10,7 @@ Doctrine is a powerful and feature packed Object Relational Mapper (ORM) that is
 
 [Object-relational Mapping](/web/20150225124900/http://en.wikipedia.org/wiki/Object-relational_mapping) is the method of accessing and converting data from incompatible systems (in this case MySQL or MariaDB) into an object or virtual object database that may be accessed and manipulate from within PHP.
 
-Doctrine relies on entities, which represent the database's tables, schema structure and relationships. Before _Doctrine_ may begin reading and writing to the database, these entities need to be created and set up. As mentioned in the article _[Getting started with Symfony 2](/web/20150225124900/http://MarcoValente.com/getting-started-with-symfony-2/ "Getting started with Symfony 2")_, entities may be quickly generated using the console.
+Doctrine relies on entities, which represent the database's tables, schema structure and relationships. Before _Doctrine_ may begin reading and writing to the database, these entities need to be created and set up. As mentioned in the article _[Getting started with Symfony 2](/web/20150225124900/http://marcovalente.io/getting-started-with-symfony-2/ "Getting started with Symfony 2")_, entities may be quickly generated using the console.
 
 ```
 $ php app/console doctrine:generate:entity

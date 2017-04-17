@@ -8,8 +8,9 @@ github_username:  MarcoV4lente
 instagram_username:  MarcoV4lente
 
 # paths
-baseurl: "/"
-url: "https://marcovalente.io"
+baseurl: '/'
+url: 'https://marcovalente.io/'
+permalink: '/articles/:title/'
 
 # Pagination
 pagination:

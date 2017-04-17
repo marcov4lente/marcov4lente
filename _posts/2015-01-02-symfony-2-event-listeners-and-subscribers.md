@@ -6,7 +6,7 @@ description: The concept of event listeners and subscribers is similar to that o
 categories: PHP
 permalink: articles/symfony-2-event-listeners-and-subscribers.html
 ---
-The concept of _event listeners_ and subscribers is similar to that of entity [_lifecycle callbacks_](/web/20150225124905/http://MarcoValente.com/beta/doctrine-orm-life-cycle-call-backs/ "Doctrine ORM lifecycle callbacks"), where they are objects that perform specific actions upon the occurrence of certain events. They are, however, used in a broader context to that of the entity _lifecycle callbacks_, which pertain solely to the Doctrine ORM. With _event listeners_ and _event subscribers_ one may tap into more than just Doctrine events, such as routing or kernel operations.
+The concept of _event listeners_ and subscribers is similar to that of entity [_lifecycle callbacks_](/web/20150225124905/http://marcovalente.io/beta/doctrine-orm-life-cycle-call-backs/ "Doctrine ORM lifecycle callbacks"), where they are objects that perform specific actions upon the occurrence of certain events. They are, however, used in a broader context to that of the entity _lifecycle callbacks_, which pertain solely to the Doctrine ORM. With _event listeners_ and _event subscribers_ one may tap into more than just Doctrine events, such as routing or kernel operations.
 
 ### Listeners and subscribers?
 

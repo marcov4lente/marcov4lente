@@ -13,9 +13,9 @@
                 <div class="col s12 m12">
                     {% for post in paginator.posts %}
                         <div class="article-list-item">
-                            <h3 class="title"><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h3>
+                            <h3 class="title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
                             <p>
-                                {{ post.description }}...<a href="{{ site.baseurl }}{{ post.url }}">read more.</a><br>
+                                {{ post.description }}...<a href="{{ post.url }}">read more.</a><br>
                                 Posted on: {{ post.date | date_to_long_string  }}.<br>
                             </p>
                         </div>
@@ -26,36 +26,29 @@
         <div class="row">
             <div class="container">
                 <div class="col s12 m12">
+                    {% if paginator.total_pages > 1 %}
+                        <ul class="pagination">
+                            {% if paginator.previous_page %}
+                                <li class="previous">
+                                    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&lt;</a>
+                                </li>
+                                {% endif %}
 
+                                {% if paginator.page_trail %}
+                                {% for trail in paginator.page_trail %}
+                                <li {% if page.url == trail.path %}class="active"{% else %}class="waves-effect"{% endif %}>
+                                    <a href="{{ trail.path | prepend: site.baseurl | replace: '//', '/' }}" title="{{trail.title}}">{{ trail.num }}</a>
+                                </li>
+                                {% endfor %}
+                                {% endif %}
 
-
-{% if paginator.total_pages > 1 %}
-    <ul class="pagination">
-        {% if paginator.previous_page %}
-            <li class="previous">
-                <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&lt;</a>
-            </li>
-            {% endif %}
-
-            {% if paginator.page_trail %}
-            {% for trail in paginator.page_trail %}
-            <li {% if page.url == trail.path %}class="active"{% else %}class="waves-effect"{% endif %}>
-                <a href="{{ trail.path | prepend: site.baseurl | replace: '//', '/' }}" title="{{trail.title}}">{{ trail.num }}</a>
-            </li>
-            {% endfor %}
-            {% endif %}
-
-            {% if paginator.next_page %}
-            <li class="next">
-                <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">&gt;</a>
-            </li>
-        {% endif %}
-    </ul>
-{% endif %}
-
-
-
-
+                                {% if paginator.next_page %}
+                                <li class="next">
+                                    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">&gt;</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
                 </div>
             </div>
         </div>

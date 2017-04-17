@@ -12,7 +12,7 @@ _Symfony 2_ includes many built in features but unlike Laravel, it does have a r
 
 ### Installation
 
-Symfony uses [_Composer_](http://MarcoValente.com/beta/composer-basic-usage-guide/ "Composer basic usage") as it's package manager, therefore it is required that _Composer_ is properly installed and fully operational before beginning to make use of the framework. [Click here](http://MarcoValente.com/beta/composer-basic-usage-guide/ "Composer basic usage") for a starter guide on installtion and basic _Composer_ usage.
+Symfony uses [_Composer_](http://marcovalente.io/beta/composer-basic-usage-guide/ "Composer basic usage") as it's package manager, therefore it is required that _Composer_ is properly installed and fully operational before beginning to make use of the framework. [Click here](http://marcovalente.io/beta/composer-basic-usage-guide/ "Composer basic usage") for a starter guide on installtion and basic _Composer_ usage.
 
 The following _Composer_ command will install the _Symfony 2_ framework in the folder titled "my-symfony-project"
 

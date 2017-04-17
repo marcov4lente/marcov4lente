@@ -14,7 +14,7 @@ $ cd /etc/nginx/sites-available
 
 Create a new site configuration file.
 ```
-$ sudo nano MarcoValente.com
+$ sudo nano marcovalente.io
 ```
 
 Add the following server configuration to the site config file, replacing the domain and direcotry names appropriately. Then save.
@@ -23,9 +23,9 @@ server {
     listen 80 default_server;
     listen [::]:80 default_server;
 
-    root /var/www/MarcoValente.com;
+    root /var/www/marcovalente.io;
     index index.php index.html index.htm index.nginx-debian.html;
-    server_name MarcoValente.com;
+    server_name marcovalente.io;
 
     # enable rewrite
     location / {
@@ -47,7 +47,7 @@ server {
 
 Enable the website, by symlinking it's configuration file to the *sites-enabled* folder:
 ```
-ls -s /etc/nginx/sites-available/MarcoValente.com /etc/nginx/sites-enabled/MarcoValente.com
+ls -s /etc/nginx/sites-available/marcovalente.io /etc/nginx/sites-enabled/marcovalente.io
 ```
 
 Confirm that the server's configuration files contain no errors.
