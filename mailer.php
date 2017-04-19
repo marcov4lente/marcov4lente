@@ -42,7 +42,7 @@ class Mailer
         require 'mailer/PHPMailer.php';
         require 'mailer/Exception.php';
         require 'mailer/SMTP.php';
-        $mailerConfig = include('mailer-config.php');
+        $mailerConfig = include('mailer.config.php');
 
         $mail = new PHPMailer;
         $mail->isSMTP();
