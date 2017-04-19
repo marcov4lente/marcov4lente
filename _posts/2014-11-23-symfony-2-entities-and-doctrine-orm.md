@@ -8,9 +8,9 @@ permalink: articles/symfony-2-entities-and-doctrine-orm.html
 ---
 Doctrine is a powerful and feature packed Object Relational Mapper (ORM) that is the preferred default in _Symfony 2_. It's great power does come with a slightly higher learning curve compared to, for example, that of the Eloquent ORM.
 
-[Object-relational Mapping](/web/20150225124900/http://en.wikipedia.org/wiki/Object-relational_mapping) is the method of accessing and converting data from incompatible systems (in this case MySQL or MariaDB) into an object or virtual object database that may be accessed and manipulate from within PHP.
+[Object-relational Mapping](http://en.wikipedia.org/wiki/Object-relational_mapping) is the method of accessing and converting data from incompatible systems (in this case MySQL or MariaDB) into an object or virtual object database that may be accessed and manipulate from within PHP.
 
-Doctrine relies on entities, which represent the database's tables, schema structure and relationships. Before _Doctrine_ may begin reading and writing to the database, these entities need to be created and set up. As mentioned in the article _[Getting started with Symfony 2](/web/20150225124900/http://marcovalente.io/getting-started-with-symfony-2/ "Getting started with Symfony 2")_, entities may be quickly generated using the console.
+Doctrine relies on entities, which represent the database's tables, schema structure and relationships. Before _Doctrine_ may begin reading and writing to the database, these entities need to be created and set up. As mentioned in the article _[Getting started with Symfony 2](http://marcovalente.io/articles/getting-started-symfony-2.html "Getting started with Symfony 2")_, entities may be quickly generated using the console.
 
 ```
 $ php app/console doctrine:generate:entity
@@ -84,14 +84,14 @@ Or ensuring that a field's value is one of a predefined set of choices.
 
 ```
 
-There are numerous other validation options that all follow this signature, please refer to [Symfony's Validation Constraints Reference page](/web/20150225124900/http://symfony.com/doc/current/reference/constraints.html) for a full list.
+There are numerous other validation options that all follow this signature, please refer to [Symfony's Validation Constraints Reference page](http://symfony.com/doc/current/reference/constraints.html) for a full list.
+
 
 ### Relationships
-
 Consider the three related entities, _Article,_ _ArticleCategory_ and _ArticleTags._ Where many articles link to one category and many articles link to many tags. With Doctrine ORM, these relationships may be defined so that any one of these entities, as well as their related entities, are easily accessible and manipulatable. Doctrine supports _one to many_, _many to one_ and _many to many_ relationship types. All of which as defined in the entity with annotations.
 
-#### One to many relationships
 
+#### One to many relationships
 In the _ArticleCategory_ entity below, ONE category is mapped to MANY articles.
 
 ```
@@ -105,8 +105,8 @@ In the _ArticleCategory_ entity below, ONE category is mapped to MANY articles.
 - **targetEntity**: The "Many" in the One to Many relationship, which is the Article entity in this case.
 - **mappedBy**: The field in the target entity that represents the current entity, in this example, being the _ArticleCategory_ entity.
 
-#### Many to one relationships
 
+#### Many to one relationships
 In the _Article_ entity, MANY articles are mapped to ONE category.
 
 ```
@@ -141,8 +141,8 @@ The above ORM join definition joins the two entities on the columns defined by `
 
 With this in place, the _Article_ entity, when accessed, is loaded in full along with it's related _ArticleCategory_ entity. For example: `$resultArticleObject->getCategory()->getName()`, `$resultArticleObject->getCategory()->getDescription()`.
 
-#### Many to many relationships
 
+#### Many to many relationships
 A good example of a many to many relationship would be a collection articles and a collection of tags, where one article may link to many tags and inversely one tag may have may articles linking to it. In this scenario the _Article_ entity will therefore have a many to many relationship with the _ArticleTags_ entity.
 
 In the _Article_ entity the following is defined.
@@ -157,12 +157,12 @@ While in the _ArticleTags_ entity the following is defined.
 @ORM\ManyToMany(targetEntity="Article" mappedBy="tags")
 ```
 
-### Reading database records
 
+### Reading database records
 There exists mainly two ways to access data from a database via the Doctrine ORM. These being via the entity manager object, or via the query builder. Using the entity manager is the most common why of accessing database records, however, these exists instances where a certain query or data set is so complex that the entity manager is no longer suitable.
 
-#### With the entity manager
 
+#### With the entity manager
 Initiating the Doctrine repositories.
 
 ```
@@ -214,8 +214,8 @@ Return all records of an entity.
 
 If the entity being queried has any relationships defined, with the _JoinColumns_ definition, then the entity manager will also load these related entities into the results object.
 
-#### With Doctrine's query builder
 
+### With Doctrine's query builder
 For instances where basic record querying s not quire suitable, Doctrine's useful query buider may be employed to do the job. The query builder allows complex queries to be built, that may include al sorts of operations such as joins, unions and even subqueries.
 
 Select the repository, initialize the query builder and assign an alias.
@@ -307,8 +307,8 @@ $articleEntity = $query->getResult();
 
 ```
 
-### Writing to the database
 
+### Writing to the database
 Writing to the database is done with the `persist()` and `flush()` flush methods, when dealing with an entity manager object.
 
 The `persist()` method adds the changes to the update queue, while `flush()` inserts or updates the database record.
@@ -327,15 +327,16 @@ Similarly, with the `remove()` function, database records may be deleted.
 
 ```
 
-### In conclusion
 
+### In conclusion
 Despite the learning curve, the Doctrine ORM is a wonderful ORM to work with. It's certainly one of the things that makes _Symfony_ 2 so great!
+
 
 ### References
 
-- [http://www.symfony2cheatsheet.com](/web/20150225124900/http://www.symfony2cheatsheet.com/)
-- [http://symfony.com/doc/current/book/doctrine.html#relationship-mapping-metadata](/web/20150225124900/http://symfony.com/doc/current/book/doctrine.html#relationship-mapping-metadata)
-- [http://doctrine-orm.readthedocs.org/en/latest/reference/annotations-reference.html](/web/20150225124900/http://doctrine-orm.readthedocs.org/en/latest/reference/annotations-reference.html)
-- [http://doctrine-orm.readthedocs.org/en/latest/reference/query-builder.html#executing-a-query](/web/20150225124900/http://doctrine-orm.readthedocs.org/en/latest/reference/query-builder.html#executing-a-query)
-- [http://symfony.com/doc/current/reference/constraints.html](/web/20150225124900/http://symfony.com/doc/current/reference/constraints.html)
-- [http://stackoverflow.com/questions/18970941/how-to-select-fields-using-doctrine-2-query-builder](/web/20150225124900/http://stackoverflow.com/questions/18970941/how-to-select-fields-using-doctrine-2-query-builder)
+- [http://www.symfony2cheatsheet.com](http://www.symfony2cheatsheet.com/)
+- [http://symfony.com/doc/current/book/doctrine.html#relationship-mapping-metadata](http://symfony.com/doc/current/book/doctrine.html#relationship-mapping-metadata)
+- [http://doctrine-orm.readthedocs.org/en/latest/reference/annotations-reference.html](http://doctrine-orm.readthedocs.org/en/latest/reference/annotations-reference.html)
+- [http://doctrine-orm.readthedocs.org/en/latest/reference/query-builder.html#executing-a-query](http://doctrine-orm.readthedocs.org/en/latest/reference/query-builder.html#executing-a-query)
+- [http://symfony.com/doc/current/reference/constraints.html](http://symfony.com/doc/current/reference/constraints.html)
+- [http://stackoverflow.com/questions/18970941/how-to-select-fields-using-doctrine-2-query-builder](http://stackoverflow.com/questions/18970941/how-to-select-fields-using-doctrine-2-query-builder)

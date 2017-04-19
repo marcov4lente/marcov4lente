@@ -15,8 +15,8 @@ My initial instinct was that the selected graphics driver was incorrect and thus
 
 The solution was therefore to blacklist these modules, which I did, and after doing so my machine worked like a charm!
 
-## Blacklist the offending modules
 
+## Blacklist the offending modules
 Open the */etc/modprobe.d/blacklist.conf* file as super user.
 
 ```
@@ -36,5 +36,5 @@ Save and close the file, and restart the operating system to have these changes 
 
 ## References
 
-- [http://askubuntu.com/questions/524894/boot-and-shutdown-issues-on-aspire-e-11-model-e3-111-c0wa](/web/20150225143918/http://askubuntu.com/questions/524894/boot-and-shutdown-issues-on-aspire-e-11-model-e3-111-c0wa)
-- [https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1341925](/web/20150225143918/https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1341925)
+- [http://askubuntu.com/questions/524894/boot-and-shutdown-issues-on-aspire-e-11-model-e3-111-c0wa](http://askubuntu.com/questions/524894/boot-and-shutdown-issues-on-aspire-e-11-model-e3-111-c0wa)
+- [https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1341925](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1341925)

@@ -17,7 +17,7 @@ Create a new site configuration file.
 $ sudo nano marcovalente.io
 ```
 
-Add the following server configuration to the site config file, replacing the domain and direcotry names appropriately. Then save.
+Add the following server configuration to the site config file, replacing the domain and directory names appropriately. Then save.
 ```
 server {
     listen 80 default_server;

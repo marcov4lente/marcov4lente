@@ -10,8 +10,8 @@ Composer is the default package management application for many modern PHP frame
 
 Having Packagist as it's default repository, developers have first line access to thousands of quality third party packages. While Packagist may be the default repository, one is by no means confined to it, as composer is flexible enough to make use of any other, private or public, repository.
 
-### Global Installation on Linux
 
+### Global Installation on Linux
 Global installation is generally preferable, as it allows one to access Composer from anywhere in the file system. Additionally, if composer is installed globally, there is no need to repeat the installation procedure for each new project. Composer does have a few package dependencies, namely _PHP_ and _GIT_, therefore prior to installing Composer these packages would need to be installed.
 
 **PHP 5**
@@ -48,8 +48,8 @@ $ composer about
 
 The above command should print out a short description about Composer, similar to _"Composer is a dependency manager tracking local dependencies of your projects and libraries._ _See http://getcomposer.org/ for more information."._ if so, then Composer was successfully installed on the system.
 
-### Starting a new project with Composer
 
+### Starting a new project with Composer
 Starting new projects with Composer is a absolute pleasure . To do so, navigate to the project's root directory using the *cd* command.
 
 ```
@@ -74,8 +74,8 @@ While this Composer command example will install _Laravel 4_ in the `/laravel-4`
 $ composer create-project laravel/laravel laravel-4 '4.2.*'
 ```
 
-### Updating application packages
 
+### Updating application packages
 Third party packages are constantly being updated by their developers. For security purposes its always a good idea to keep all third party packages up to date within one's project. The following command will initiate the composer update process, whereby it checks and updates each package if necessary. It must be noted that this command is to be run in the project's root folder.
 
 ```
@@ -84,20 +84,20 @@ $ composer update
 
 In addition to updating already installed packages, this command will install any new packages that have been recently defined in the project's composer.json file, within the `require` array .
 
-### Self update, updating Composer itself
 
+### Self update, updating Composer itself
 Every so often Composer will issue a warning, stating that it is outdated. In an effort to keep all systems running smoothly and securely, updating it is highly recommended. Updating the Composer application can be done by running the following command.
 
 ```
 $ composer self-update
 ```
 
-### The composer.json file
 
+### The composer.json file
 The composer.json file, specific to each project, contains the version information of that project package as well as an inventory of it's required dependency packages. It may also define tasks to be run before _pre_ and after _post_ each package update, such as running class auto-loaders or clearing application caches. As indicated by the file extension, the Composer.json file is written in Javascript Object Notation syntax.
 
-#### The anatomy of the composer.json file
 
+#### The anatomy of the composer.json file
 Consider the sample _Laravel 4_ composer.json file below.
 
 ```
@@ -243,8 +243,8 @@ Lastly is the application's minimum stability level requirements. This part is g
 
 Setting an incorecct stability level, when working with development packages, could have composer return all sorts of Package-not-found errors.
 
-### More on class autoloading
 
+### More on class autoloading
 There are four ways to define class autoloading in the composer.json file. these are:
 
 - Classmap

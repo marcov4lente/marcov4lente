@@ -2,10 +2,14 @@
 layout: article
 title:  "Installing a Letsencrypt.org SSL certificate on an Ubuntu 16.04 server"
 date:   2017-04-01 10:06:54 +0000
-description: Installing a Letsencrypt.org SSL certificate on an Ubuntu 16.04 server on an Ubuntu 16.04 Linux operating system.
+description: Any website that has a login form and/or deals with user-submitted data should use HTTPS. It's currently so easy to intercept HTTP data, especially whilst connected to public WiFI networks. Furthermore, popular modern browser, by default, warn users about login pages that are insecure.
 categories: Linux
 permalink: articles/installing-a-letsencrypt-ssl-certificate-on-an-Ubuntu-16-04-xenial-server.html
 ---
+Any website that has a login form and/or deals with user-submitted data should use HTTPS. It's currently so easy to intercept HTTP data, especially whilst connected to public WiFI networks. Furthermore, popular modern browser, by default, warn users about login pages that are insecure.
+
+This is where [Letsencrypt](https://letsencrypt.org/about/) comes to the rescue! [Letsencrypt](https://letsencrypt.org/about/) is a free and open SSL Certificate authority that's backed by some big names in the internet industry. Installing and using a [Letsencrypt](https://letsencrypt.org/about/) certificate is simple and takes literally minutes to set up.
+
 ## Install Certbot
 Add the Certbot repositories and install it.
 ```
@@ -16,14 +20,14 @@ $ sudo apt-get install certbot
 
 
 ## Install the SSL certificate
-Using the Webroot option, specifiy the server root and domain name of the website.
+Using the Webroot option, specify the server root and the domain name of the website.
 ```
 $ sudo certbot certonly --webroot -w /var/www/marcovalente.io/ -d marcovalente.io
 ```
 
 Remember to respond to the interactive command prompts to complete the installation.
 
-If this process fails with a "...Failed authorization procedure ... urn:acme:error:unauthorized :: The client lacks sufficient authorization..." kind of error, enable access to the .well-known directory that Certbot will create fron the NginX config.
+If this process fails with a "...Failed authorization procedure ... urn:acme:error:unauthorized :: The client lacks sufficient authorization..." kind of error, enable access to the .well-known directory that Certbot will create from the NginX config.
 
 ```
     location ~ \.well-known {
@@ -31,7 +35,7 @@ If this process fails with a "...Failed authorization procedure ... urn:acme:err
     }
 ```
 
-Once done, a success message, similiar to the one below, should pop up.
+Once done, a success message, similar to the one below, should pop up.
 ```
 ...
  - Congratulations! Your certificate and chain have been saved at
@@ -41,7 +45,7 @@ Once done, a success message, similiar to the one below, should pop up.
 
 
 ## Configure Nginx
-Inside the main server block, configure the SSH certificate as follows:
+Inside the main server block: configure the SSH certificate.
 ```
     # listen 80;
     # listen [::]:80;
@@ -53,7 +57,7 @@ Inside the main server block, configure the SSH certificate as follows:
     ssl_certificate_key /etc/letsencrypt/live/marcovalente.io/privkey.pem;
 ```
 
-Outside the main server block aAdd an additional server block to redirect HTTP traffic to HTTPS.
+Outside the main server: block add an additional server block to redirect HTTP traffic to HTTPS.
 ```
     server {
         listen 80;
@@ -73,7 +77,7 @@ $ sudo service nginx restart
 ```
 
 ## Automatic certificate renewal
-Automating the certificate renwal can be done via the system's crontab.
+Automating the certificate renewal can be done via the system's crontab.
 ```
 $ sudo crontab -e
 ```
