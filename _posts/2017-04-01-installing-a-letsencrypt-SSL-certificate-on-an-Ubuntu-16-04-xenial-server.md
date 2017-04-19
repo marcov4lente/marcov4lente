@@ -2,11 +2,11 @@
 layout: article
 title:  "Installing a Letsencrypt.org SSL certificate on an Ubuntu 16.04 server"
 date:   2017-04-01 10:06:54 +0000
-description: Any website that has a login form and/or deals with user-submitted data should use HTTPS. It's currently so easy to intercept HTTP data, especially whilst connected to public WiFI networks. Furthermore, popular modern browser, by default, warn users about login pages that are insecure.
+description: It's currently staggeringly easy to intercept HTTP (non encrypted) data, especially whilst connected to public WiFI networks. Any website that has a login form and/or deals with user-submitted information should use HTTPS to protect it's user's privacy and data.
 categories: Linux
 permalink: articles/installing-a-letsencrypt-ssl-certificate-on-an-Ubuntu-16-04-xenial-server.html
 ---
-Any website that has a login form and/or deals with user-submitted data should use HTTPS. It's currently so easy to intercept HTTP data, especially whilst connected to public WiFI networks. Furthermore, popular modern browser, by default, warn users about login pages that are insecure.
+It's currently staggeringly easy to intercept HTTP (non encrypted) data, especially whilst connected to public WiFI networks. Any website that has a login form and/or deals with user-submitted information should use HTTPS to protect it's user's privacy and data.
 
 This is where [Letsencrypt](https://letsencrypt.org/about/) comes to the rescue! [Letsencrypt](https://letsencrypt.org/about/) is a free and open SSL Certificate authority that's backed by some big names in the internet industry. Installing and using a [Letsencrypt](https://letsencrypt.org/about/) certificate is simple and takes literally minutes to set up.
 
