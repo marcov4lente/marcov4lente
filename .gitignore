@@ -3,5 +3,5 @@ _site/*
 _config.yml
 .sass-cache
 jekyll-metadata
-mailer-config.php
-
+mailer.config.php
+certbot.log

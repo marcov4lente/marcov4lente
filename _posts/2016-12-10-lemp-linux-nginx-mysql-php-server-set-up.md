@@ -2,10 +2,12 @@
 layout: article
 title:  "LEMP (Linux, NginX, MySQL, PHP) server set up"
 date:   2016-12-10 17:54:54 +0000
-description: How to install and set up a LEMP (Linux, NginX, MySQL, PHP) server.
+description: LEMP referes to a web server that runs Linux, NginX, MySQL, PHP. NginX. NginX, an alternative to Apache, is usually a little snapper than Apache..
 categories: Linux
 permalink: articles/lemp-linux-nginX-mysql-php-server-set-up.html
 ---
+LEMP refers to a web server that runs Linux, NginX, MySQL, PHP. NginX. NginX, an alternative to Apache, is usually a little snapper than Apache.
+
 
 ## Prepartion
 Update / upgrade the operating system by installing any pending system updates.
@@ -13,6 +15,7 @@ Update / upgrade the operating system by installing any pending system updates.
 $ sudo apt-get update
 $ sudo apt-get -y upgrade
 ```
+
 
 ## Installation
 Install nginx

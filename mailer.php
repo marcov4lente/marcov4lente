@@ -42,7 +42,7 @@ class Mailer
         require 'mailer/PHPMailer.php';
         require 'mailer/Exception.php';
         require 'mailer/SMTP.php';
-        $mailerConfig = include('mailer-config.php');
+        $mailerConfig = include('mailer.config.php');
 
         $mail = new PHPMailer;
         $mail->isSMTP();
@@ -56,11 +56,11 @@ class Mailer
         $mail->Port = 587;
         $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;
-        $mail->Username = $mailerConfig['gmailUsername'];
-        $mail->Password = $mailerConfig['gmailPassword'];
-        $mail->setFrom('MarcoV4lente@gmail.com', 'marcovalente.io');
+        $mail->Username = $mailerConfig['smtpUsername'];
+        $mail->Password = $mailerConfig['smtpPassword'];
+        $mail->setFrom($mailerConfig['senderEmail'], $mailerConfig['senderName']);
         $mail->addReplyTo($_POST['email'], $_POST['name']);
-        $mail->addAddress('MarcoV4lente@gmail.com', 'Marco Valente');
+        $mail->addAddress($mailerConfig['recipientEmail'], $mailerConfig['recipientName']);
         $mail->Subject = 'marcovalente.io contact form submission';
 
         $message = '

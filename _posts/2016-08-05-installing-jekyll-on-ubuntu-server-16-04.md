@@ -2,10 +2,12 @@
 layout: article
 title:  "Installing Jekyll on ubuntu 16.04"
 date:   2016-08-05 11:45:54 +0000
-description: A guide outlining the installation of Jekyll on an Ubuntu 16.04 Linux operating system.
+description: Jekyll is a popular blogging platform, predominantly with developers. Jekyll, unlike PHP blogging platforms, is precompiled and built, as opposed to being compiled at runtime. This means that a Jekyll site is generally faster! The pages it serves require no computer processing to build, as they are already plain HTML.
 categories: Linux
 permalink: articles/installing-jekyll-on-ubuntu-server-16-04-xenial.html
 ---
+Jekyll is a popular blogging platform, predominantly with developers. Jekyll, unlike PHP blogging platforms, is precompiled and built, as opposed to being compiled at runtime. This means that a Jekyll site is generally faster! The pages it serves require no computer processing to build, as they are already plain HTML.
+
 ## The environment
 The basic requirements for Jekyll are:
 - GNU/Linux or Apple macOS
@@ -15,6 +17,7 @@ The basic requirements for Jekyll are:
 - Make
 
 This guide will outline the installation of the above requirements on an Ubuntu 16.04 Linux operating system.
+
 
 ## Installation
 Install Ruby
@@ -74,12 +77,12 @@ Install Jekyll
 $ sudo gem install jekyll
 ```
 
-Check if the installation was succesfull
+Check if the installation was successful
 ```
 $ jekyll --version
 ```
 
-Install the new paginate module ,an optional module to generate paginated content lists.
+Install the new paginate module , an optional module to generate paginated content lists.
 ```
 $ gem install jekyll-paginate-v2
 ```

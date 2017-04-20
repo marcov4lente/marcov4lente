@@ -16,7 +16,7 @@ Recursively add read/write permissions to an owner's or group's folder
 $ chmod -R ug+rw foldername
 ```
 
-For the web root folder permissions, set group of folder to www-data.
+For the web root folder permissions, set the group of the folder to *www-data*.
 ```
 $ sudo chgrp www-data /var/www
 ```

@@ -77,8 +77,8 @@ Routes may also contain variable data, for instance: slugs, content id's or pagi
 
 HTTP methods, such `GET`, illustrated in the example above, may also be set to limit the route to a specific HTTP method. This is mighty useful for when setting up identical URL's that map to different controllers and/or methods, for instance an edit and update method.
 
-### Registering controllers that use annotated routes
 
+### Registering controllers that use annotated routes
 General bundle routing is usually configured in the bundle's routing.yml configuration file `/src/Vendor/Bundle/Resources/config/routing.yml`. This configuration file is responsible for declaring all bundle classes that make use of annotated routing (and other types of routing to, if so desired by a developer). An example configuration would look like the following:
 
 ```

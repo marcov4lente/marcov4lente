@@ -15,6 +15,7 @@ An outline of what the installation process consists of.
 - Executing Gulp
 - Troubleshooting
 
+
 ## Installation
 Installing Node and NPM on Ubuntu Linux (if not already installed), using the Node maintained Ubuntu repositories.
 ```
@@ -56,8 +57,6 @@ $ sudo npm install -g  gulp-concat
 $ sudo npm install -g gulp-connect
 $ sudo npm install -g gulp-sourcemaps
 ```
-
-
 
 ## Initiate a Project
 Create a package.json file in the root of the project.
@@ -129,7 +128,6 @@ npmjs.com definition: Gulp plugin to run a webserver (with LiveReload).
 https://www.npmjs.com/package/gulp-connect
 
 
-
 ## Ggulpfile.js
 The Gulp File defines the Gulp tasks to be carried out. This resides in the root of the project. A sample Gulp File (based on https://www.npmjs.com/package/gulp) as follows:
 ```
@@ -176,11 +174,13 @@ gulp.task('default', ['watch', 'scripts', 'styles']);
 
 The above Gulp File configuration is based on that in the Gulp documentation https://www.npmjs.com/package/gulp
 
+
 ## Executing Gulp
 This will launch a persistant instance of gulp, which will watch the defined folders for changes and publish them to the defined destination files.
 ```
 $ gulp
 ```
+
 
 ## Troubleshooting
 NPM error

@@ -6,12 +6,12 @@ description: Linux user management via the terminal.
 categories: Linux
 permalink: articles/linux-user-management-via-the-terminal.html
 ---
-**Create new user**
+**Create a new user**
 
 ```
 $ adduser username
 ```
-**Add user to sudo group**
+**Add a user to sudo group**
 
 ```
 $ usermod -aG sudo username
